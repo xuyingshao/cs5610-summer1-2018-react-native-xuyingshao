@@ -1,9 +1,9 @@
 import React from 'react';
-import {ScrollView, View, Text} from 'react-native';
-import {Button, ListItem} from 'react-native-elements';
+import {ScrollView, Text} from 'react-native';
+import {ListItem} from 'react-native-elements';
 import WidgetTypePicker from '../elements/WidgetTypePicker';
-import LessonServiceClient from "../services/LessonServiceClient";
 import WidgetServiceClient from "../services/WidgetServiceClient";
+
 
 export default class WidgetList
     extends React.Component {
@@ -73,7 +73,6 @@ export default class WidgetList
                     );
                 })}
                 <WidgetTypePicker navigation={this.props.navigation}/>
-
             </ScrollView>
         );
     }

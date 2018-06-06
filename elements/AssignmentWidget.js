@@ -1,5 +1,5 @@
 import React from 'react';
-import {ScrollView, StyleSheet, TextInput, View} from "react-native";
+import {ScrollView, StyleSheet, TextInput} from "react-native";
 import {FormLabel, FormInput, FormValidationMessage} from 'react-native-elements';
 import {Button, Text} from 'react-native-elements';
 import WidgetServiceClient from "../services/WidgetServiceClient";
@@ -21,7 +21,7 @@ export default class AssignmentWidget
             points: 0,
             widget: {},
             previewMode: false
-        }
+        };
 
         this.widgetServiceClient = WidgetServiceClient.instance();
     }
@@ -76,8 +76,7 @@ export default class AssignmentWidget
                         width: 330,
                         height: 40,
                         marginTop: 1,
-                        margin: 10,
-                    }}
+                        margin: 10,}}
                             backgroundColor='#4c73c4'
                             title='Save Assignment'
                             onPress={() => {
@@ -87,7 +86,7 @@ export default class AssignmentWidget
                                         'description': this.state.description,
                                         'points': this.state.points,
                                         'widgetType': 'Assignment'
-                                    }
+                                    };
 
                                     this.widgetServiceClient.createAssignment(this.state.lessonId, assignment)
                                         .then(this.props.navigation.navigate('LessonList'));
@@ -158,7 +157,6 @@ export default class AssignmentWidget
                                     borderColor: "transparent",
                                     borderWidth: 0,
                                     borderRadius: 5,
-
                                 }}
                                 title='Choose File'/>
                     </Text>
@@ -185,4 +183,4 @@ const styles = StyleSheet.create({
         height: 150,
         justifyContent: "flex-start"
     }
-})
+});

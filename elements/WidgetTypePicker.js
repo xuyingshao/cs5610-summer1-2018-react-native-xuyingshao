@@ -1,6 +1,7 @@
 import React from 'react';
-import {View, Picker, Text} from 'react-native';
+import {View, Picker} from 'react-native';
 import {Button} from 'react-native-elements';
+
 
 export default class WidgetTypePicker
     extends React.Component {
@@ -38,10 +39,10 @@ export default class WidgetTypePicker
                         backgroundColor='#4c73c4'
                         title='Add Widget'
                         onPress={() => {
-                            if (this.state.widgetType == 'AS') {
+                            if (this.state.widgetType === 'AS') {
                                 this.props.navigation.navigate('AssignmentWidget', {'lessonId': this.state.lessonId});
                             }
-                            if (this.state.widgetType == 'EX') {
+                            if (this.state.widgetType === 'EX') {
                                 this.props.navigation.navigate('ExamCreator', {'lessonId': this.state.lessonId});
                             }
                         }}/>

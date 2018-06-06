@@ -13,6 +13,6 @@ const FixedHeader = () => {
             rightComponent={{icon: 'home', color: '#fff',
                 onPress: () => {Alert.alert("home")}}}/>
     );
-}
+};
 
 export default FixedHeader;

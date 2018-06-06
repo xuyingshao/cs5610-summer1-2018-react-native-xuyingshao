@@ -91,7 +91,7 @@ export default class TrueFalseQuestionEditor
                             color='white'
                             title='Save'
                             onPress={() => {
-                                if (this.state.questionId == 0) {
+                                if (this.state.questionId === 0) {
                                     let question = {
                                         'title': this.state.title,
                                         'description': this.state.description,
@@ -133,27 +133,22 @@ export default class TrueFalseQuestionEditor
                             title='Delete'
                             onPress={() => {
                                 this.questionServiceClient.deleteTrueFalseQuestion(this.state.questionId)
-                                    .then(this.props.navigation.navigate('WidgetList'));
-                            }}
+                                    .then(this.props.navigation.navigate('WidgetList'));}}
                             buttonStyle={{
                                 width: 330,
                                 height: 40,
                                 marginTop: 1,
-                                margin: 10,
-                            }}/>
+                                margin: 10,}}/>
                 </ScrollView>}
 
                 <Button title="Preview"
                         onPress={() => {
-                            this.setState({previewMode: !this.state.previewMode})
-                        }}
+                            this.setState({previewMode: !this.state.previewMode})}}
                         buttonStyle={{
                             width: 330,
                             height: 40,
                             marginTop: 1,
-                            margin: 10,
-                        }}/>
-
+                            margin: 10,}}/>
 
                 {this.state.previewMode &&
                 <ScrollView style={styles.textAreaContainer}>
@@ -199,4 +194,4 @@ const styles = StyleSheet.create({
         height: 150,
         justifyContent: "flex-start"
     }
-})
+});

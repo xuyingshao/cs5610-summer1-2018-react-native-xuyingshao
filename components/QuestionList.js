@@ -1,9 +1,7 @@
 import React from 'react';
-import {View} from 'react-native';
-import {Button, ListItem, Divider} from 'react-native-elements';
-import WidgetTypePicker from '../elements/WidgetTypePicker';
-import QuestionTypeButtonGroupChooser from "../elements/QuestionTypeButtonGroupChooser";
-import Text from "react-native-elements/src/text/Text";
+import {View, ScrollView} from 'react-native';
+import {ListItem, Text} from 'react-native-elements';
+
 
 export default class QuestionList
     extends React.Component {
@@ -29,7 +27,7 @@ export default class QuestionList
 
     render() {
         return (
-            <View>
+            <ScrollView>
                 <Text h4> in question list: {this.state.examId}</Text>
                 {this.state.questions.map((question) => {
                     return (
@@ -87,7 +85,7 @@ export default class QuestionList
                         </View>
                     );
                 })}
-            </View>
+            </ScrollView>
         );
     }
 }

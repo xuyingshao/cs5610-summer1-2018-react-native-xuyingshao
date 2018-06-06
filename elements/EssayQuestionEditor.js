@@ -1,7 +1,7 @@
 import React from 'react';
 import {ScrollView, TextInput, StyleSheet} from 'react-native';
 import {FormLabel, FormInput, FormValidationMessage} from 'react-native-elements';
-import {Button, CheckBox, Text} from 'react-native-elements';
+import {Button, Text} from 'react-native-elements';
 import QuestionServiceClient from "../services/QuestionServiceClient";
 
 
@@ -76,13 +76,12 @@ export default class EssayQuestionEditor
                         width: 330,
                         height: 40,
                         marginTop: 1,
-                        margin: 10,
-                    }}
+                        margin: 10,}}
                             backgroundColor='#4c73c4'
                             color='white'
                             title='Save'
                             onPress={() => {
-                                if (this.state.questionId == 0) {
+                                if (this.state.questionId === 0) {
                                     let question = {
                                         'title': this.state.title,
                                         'description': this.state.description,
@@ -115,33 +114,28 @@ export default class EssayQuestionEditor
                                 width: 330,
                                 height: 40,
                                 marginTop: 1,
-                                margin: 10,
-                            }}/>
+                                margin: 10,}}/>
                     <Button backgroundColor='#FA8072'
                             color='white'
                             title='Delete'
                             onPress={() => {
                                 this.questionServiceClient.deleteEssayQuestion(this.state.questionId)
-                                    .then(this.props.navigation.navigate('WidgetList'));
-                            }}
+                                    .then(this.props.navigation.navigate('WidgetList'));}}
                             buttonStyle={{
                                 width: 330,
                                 height: 40,
                                 marginTop: 1,
-                                margin: 10,
-                            }}/>
+                                margin: 10,}}/>
                 </ScrollView>}
 
                 <Button title="Preview"
                         onPress={() => {
-                            this.setState({previewMode: !this.state.previewMode})
-                        }}
+                            this.setState({previewMode: !this.state.previewMode})}}
                         buttonStyle={{
                             width: 330,
                             height: 40,
                             marginTop: 1,
-                            margin: 10,
-                        }}/>
+                            margin: 10,}}/>
 
                 {this.state.previewMode &&
                 <ScrollView style={styles.textAreaContainer}>
@@ -154,7 +148,6 @@ export default class EssayQuestionEditor
                         numberOfLines={10}
                         multiline={true}/>
                 </ScrollView>}
-
             </ScrollView>
         );
     }
@@ -171,4 +164,4 @@ const styles = StyleSheet.create({
         height: 150,
         justifyContent: "flex-start"
     }
-})
+});

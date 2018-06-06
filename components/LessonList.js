@@ -1,7 +1,8 @@
 import React from 'react';
 import LessonServiceClient from "../services/LessonServiceClient";
-import {View} from 'react-native';
-import {ListItem, Button} from "react-native-elements";
+import {ScrollView} from 'react-native';
+import {ListItem} from "react-native-elements";
+
 
 export default class LessonList
     extends React.Component {
@@ -35,18 +36,18 @@ export default class LessonList
 
     render() {
         return (
-            <View>
+            <ScrollView>
                 {this.state.lessons.map((lesson) =>
                     <ListItem
-                        onPress={() => this.props.navigation.navigate("WidgetList",
-                            {
+                        onPress={() =>
+                            this.props.navigation.navigate("WidgetList", {
                                 courseId: this.state.courseId,
                                 moduleId: this.state.moduleId,
                                 lessonId: lesson.id,
                             })}
                         title={lesson.title}
                         key={lesson.id}/>)}
-            </View>
+            </ScrollView>
         );
     }
 }

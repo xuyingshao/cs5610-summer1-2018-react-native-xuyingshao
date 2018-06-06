@@ -1,10 +1,8 @@
 import React from 'react';
-import {Text, View, ScrollView} from "react-native";
-import {Button, ListItem} from "react-native-elements";
+import {ScrollView} from "react-native";
 import {FormLabel, FormInput, FormValidationMessage} from "react-native-elements";
 import QuestionTypeButtonGroupChooser from "./QuestionTypeButtonGroupChooser";
 import QuestionList from "../components/QuestionList";
-import {Alert} from "react-native";
 import WidgetServiceClient from "../services/WidgetServiceClient";
 import QuestionServiceClient from "../services/QuestionServiceClient";
 
@@ -24,7 +22,7 @@ export default class ExamWidget
             description: '',
             // points: 0,
             questions: []
-        }
+        };
 
         this.widgetServiceClient = WidgetServiceClient.instance();
         this.questionServiceClient = QuestionServiceClient.instance();
@@ -153,26 +151,22 @@ export default class ExamWidget
                             width: 330,
                             height: 40,
                             marginTop: 2,
-                            margin: 10,
-                        }}/>
+                            margin: 10,}}/>
                 <Button backgroundColor='#4682B4'
                         title='Cancel'
                         onPress={() => {
-                            this.props.navigation.navigate('LessonList');
-                        }}
+                            this.props.navigation.navigate('LessonList');}}
                         buttonStyle={{
                             width: 330,
                             height: 40,
-                            marginTop: 1,
-                            margin: 10,
+                            marginTop: 1, margin: 10,
                         }}/>
                 <Button backgroundColor='#FA8072'
                         title='Delete Exam'
                         onPress={() => {
                             this.widgetServiceClient.deleteExam(this.state.examId)
                                 .then(() => {
-                                    this.props.navigation.navigate('LessonList')
-                                })
+                                    this.props.navigation.navigate('LessonList')})
                         }}
                         buttonStyle={{
                             width: 330,

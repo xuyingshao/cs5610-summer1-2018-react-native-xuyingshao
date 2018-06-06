@@ -24,7 +24,7 @@ export default class MultipleChoiceQuestionEditor
             correctAnswer: '',
             previewMode: false,
             icon: 'list'
-        }
+        };
 
         this.questionServiceClient = QuestionServiceClient.instance();
     }
@@ -132,7 +132,7 @@ export default class MultipleChoiceQuestionEditor
                                         'points': this.state.points,
                                         'choices': this.state.choices,
                                         'correctAnswer': this.state.correctAnswer
-                                    }
+                                    };
 
                                     this.questionServiceClient.updateMultipleChoiceQuestion(this.state.questionId, question)
                                         .then(this.props.navigation.navigate('WidgetList'));
@@ -142,39 +142,33 @@ export default class MultipleChoiceQuestionEditor
                             color='white'
                             title='Cancel'
                             onPress={() => {
-                                this.props.navigation.goBack()
-                            }}
+                                this.props.navigation.goBack()}}
                             buttonStyle={{
                                 width: 330,
                                 height: 40,
-                                marginTop: 1,
-                                margin: 10,
+                                marginTop: 1, margin: 10,
                             }}/>
                     <Button backgroundColor='#FA8072'
                             color='white'
                             title='Delete'
                             onPress={() => {
                                 this.questionServiceClient.deleteMultipleChoiceQuestion(this.state.questionId)
-                                    .then(this.props.navigation.navigate('WidgetList'));
-                            }}
+                                    .then(this.props.navigation.navigate('WidgetList'));}}
                             buttonStyle={{
                                 width: 330,
                                 height: 40,
                                 marginTop: 1,
-                                margin: 10,
-                            }}/>
+                                margin: 10,}}/>
                 </ScrollView>}
 
                 <Button title="Preview"
                         onPress={() => {
-                            this.setState({previewMode: !this.state.previewMode})
-                        }}
+                            this.setState({previewMode: !this.state.previewMode})}}
                         buttonStyle={{
                             width: 330,
                             height: 40,
                             marginTop: 1,
-                            margin: 10,
-                        }}/>
+                            margin: 10,}}/>
 
                 {this.state.previewMode &&
                 <ScrollView style={styles.textAreaContainer}>
@@ -216,4 +210,4 @@ const styles = StyleSheet.create({
         height: 50,
         justifyContent: "flex-start"
     }
-})
+});

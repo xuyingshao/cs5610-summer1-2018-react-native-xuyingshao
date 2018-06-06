@@ -1,6 +1,6 @@
 import React from 'react';
 import ModuleServiceClient from "../services/ModuleServiceClient";
-import {View} from "react-native";
+import {ScrollView} from "react-native";
 import {ListItem} from "react-native-elements";
 
 
@@ -15,7 +15,7 @@ export default class ModuleList
         this.state = {
             courseId: 1,
             modules: []
-        }
+        };
 
         this.moduleServiceClient = ModuleServiceClient.instance();
     }
@@ -23,7 +23,7 @@ export default class ModuleList
     componentDidMount() {
         const courseId = this.props.navigation.getParam('courseId', 1);
 
-        this.setState({courseId: courseId});    // setState is asynchronous
+        this.setState({courseId: courseId});
 
         this.moduleServiceClient.findAllModulesForCourse(courseId)
             .then((modules) => {
@@ -35,17 +35,16 @@ export default class ModuleList
 
     render() {
         return (
-            <View>
+            <ScrollView>
                 {this.state.modules.map((module) =>
                     <ListItem
-                        onPress={() => this.props.navigation.navigate("LessonList",
-                            {
-                                courseId: this.state.courseId,
-                                lessonId: module.id
-                            })}
+                        onPress={() => this.props.navigation.navigate("LessonList", {
+                            courseId: this.state.courseId,
+                            lessonId: module.id
+                        })}
                         title={module.title}
                         key={module.id}/>)}
-            </View>
+            </ScrollView>
         );
     }
 }

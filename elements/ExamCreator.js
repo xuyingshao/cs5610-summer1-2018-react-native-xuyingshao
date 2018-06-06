@@ -1,6 +1,6 @@
 import React from 'react';
-import {View} from 'react-native';
-import {Button, Text} from 'react-native-elements';
+import {ScrollView} from 'react-native';
+import {Button} from 'react-native-elements';
 import {FormLabel, FormInput, FormValidationMessage} from 'react-native-elements';
 import WidgetServiceClient from "../services/WidgetServiceClient";
 
@@ -31,7 +31,7 @@ export default class ExamCreator
 
     render() {
         return (
-            <View>
+            <ScrollView>
                 <FormLabel>Title</FormLabel>
                 <FormInput onChangeText={(text) => {
                     this.setState({title: text});
@@ -83,20 +83,18 @@ export default class ExamCreator
                             width: 330,
                             height: 40,
                             marginTop: 1,
-                            margin: 10,
-                        }}/>
+                            margin: 10,}}/>
                 <Button backgroundColor="#4682B4"
                         title="Cancel"
                         onPress={() => {
-                            this.props.navigation.goBack()
-                        }}
+                            this.props.navigation.goBack()}}
                         buttonStyle={{
                             width: 330,
                             height: 40,
                             marginTop: 1,
                             margin: 10,
                         }}/>
-            </View>
+            </ScrollView>
         );
     }
 }

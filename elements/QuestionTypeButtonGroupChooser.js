@@ -1,6 +1,6 @@
 import React from 'react';
-import {View, Text} from 'react-native';
-import {ButtonGroup, Button, Divider} from 'react-native-elements';
+import {ScrollView} from 'react-native';
+import {ButtonGroup, Button} from 'react-native-elements';
 
 
 export default class QuestionTypeButtonGroupChooser
@@ -17,7 +17,6 @@ export default class QuestionTypeButtonGroupChooser
         this.selectQuestionType = this.selectQuestionType.bind(this);
     }
 
-    // FIXME
     componentDidMount() {
         const examId = this.props.navigation.getParam('examId', 0);
         this.setState({examId: examId});
@@ -25,7 +24,7 @@ export default class QuestionTypeButtonGroupChooser
 
     selectQuestionType = (newTypeIndex) => {
         this.setState({selectedTypeIndex: newTypeIndex});
-    }
+    };
 
 
     render() {
@@ -37,7 +36,7 @@ export default class QuestionTypeButtonGroupChooser
         ];
 
         return (
-            <View>
+            <ScrollView>
                 <ButtonGroup
                     onPress={this.selectQuestionType}
                     selectedIndex={this.state.selectedTypeIndex}
@@ -64,7 +63,7 @@ export default class QuestionTypeButtonGroupChooser
                                     {'examId': this.state.examId});
                             }
                         }}/>
-            </View>
+            </ScrollView>
         );
     }
 }

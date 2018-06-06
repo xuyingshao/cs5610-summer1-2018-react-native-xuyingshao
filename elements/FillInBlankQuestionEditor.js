@@ -1,7 +1,7 @@
 import React from 'react';
 import {ScrollView, StyleSheet, TextInput, View} from 'react-native';
 import {FormLabel, FormInput, FormValidationMessage} from 'react-native-elements';
-import {Button, CheckBox, Text} from 'react-native-elements';
+import {Button, Text} from 'react-native-elements';
 import QuestionServiceClient from "../services/QuestionServiceClient";
 
 
@@ -99,7 +99,7 @@ export default class EssayQuestionEditor
                             color='white'
                             title='Save'
                             onPress={() => {
-                                if (this.state.questionId == 0) {
+                                if (this.state.questionId === 0) {
                                     let question = {
                                         'title': this.state.title,
                                         'description': this.state.description,
@@ -128,27 +128,23 @@ export default class EssayQuestionEditor
                             color='white'
                             title='Cancel'
                             onPress={() => {
-                                this.props.navigation.goBack()
-                            }}
+                                this.props.navigation.goBack()}}
                             buttonStyle={{
                                 width: 330,
                                 height: 40,
                                 marginTop: 1,
-                                margin: 10,
-                            }}/>
+                                margin: 10,}}/>
                     <Button backgroundColor='#FA8072'
                             color='white'
                             title='Delete'
                             onPress={() => {
                                 this.questionServiceClient.deleteFillInBlanksQuestion(this.state.questionId)
-                                    .then(this.props.navigation.navigate('WidgetList'));
-                            }}
+                                    .then(this.props.navigation.navigate('WidgetList'));}}
                             buttonStyle={{
                                 width: 330,
                                 height: 40,
                                 marginTop: 1,
-                                margin: 10,
-                            }}/>
+                                margin: 10,}}/>
                 </ScrollView>}
 
                 <Button title="Preview"
@@ -181,7 +177,7 @@ const parseBlank = (text, index) => {
     let close = 0;
     let expressions = [];
 
-    while (text.indexOf('[', previousClose + 1) != -1) {
+    while (text.indexOf('[', previousClose + 1) !== -1) {
         open = text.indexOf('[', previousClose + 1);
         close = text.indexOf(']', open);
         if (open === 0) {
@@ -210,7 +206,7 @@ const parseBlank = (text, index) => {
             })}
         </View>
     );
-}
+};
 
 const styles = StyleSheet.create({
     row: {
@@ -233,4 +229,4 @@ const styles = StyleSheet.create({
         borderColor: 'black',
         borderWidth: 1
     },
-})
+});

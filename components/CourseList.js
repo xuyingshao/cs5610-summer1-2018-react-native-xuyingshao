@@ -33,7 +33,9 @@ export default class CourseList
                 <FixedHeader/>
                 {this.state.courses.map((course) =>
                     (<ListItem
-                        onPress={() => {this.props.navigation.navigate("ModuleList", {courseId: course.id})}}
+                        onPress={() => {
+                            this.props.navigation.navigate("ModuleList", {courseId: course.id})
+                        }}
                         title={course.title}
                         key={course.id}/>))}
             </ScrollView>

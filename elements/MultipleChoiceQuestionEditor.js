@@ -190,7 +190,7 @@ export default class MultipleChoiceQuestionEditor
                         selectedIconName={"ios-checkmark-circle-outline"}
                         unselectedIconName={"ios-radio-button-off-outline"}
                         scrollViewHeight={130}
-                        selected={[1, 2]} // list of options which are selected by default
+                        selected={options[this.state.correctAnswer]} // list of options which are selected by default
                     />
                 </ScrollView>}
             </ScrollView>

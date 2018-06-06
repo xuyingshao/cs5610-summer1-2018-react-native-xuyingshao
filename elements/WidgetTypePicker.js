@@ -40,10 +40,10 @@ export default class WidgetTypePicker
                         title='Add Widget'
                         onPress={() => {
                             if (this.state.widgetType === 'AS') {
-                                this.props.navigation.navigate('AssignmentWidget', {'lessonId': this.state.lessonId});
+                                this.props.navigation.navigate('AssignmentWidget', {lessonId: this.state.lessonId});
                             }
                             if (this.state.widgetType === 'EX') {
-                                this.props.navigation.navigate('ExamCreator', {'lessonId': this.state.lessonId});
+                                this.props.navigation.navigate('ExamCreator', {lessonId: this.state.lessonId});
                             }
                         }}/>
             </View>

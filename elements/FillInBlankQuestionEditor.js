@@ -196,12 +196,13 @@ const parseBlank = (text, index) => {
 
     return (
         <View style={styles.row} key={index}>
-            {expressions.map((expression) => {
+            {expressions.map((expression, index) => {
                 if (expression === '[]') {
-                    return (<TextInput style={styles.input}/>);
+                    return (<TextInput key={index}
+                                       style={styles.input}/>);
                 }
                 else {
-                    return (<Text h4>{expression}</Text>);
+                    return (<Text h4 key={index}>{expression}</Text>);
                 }
             })}
         </View>

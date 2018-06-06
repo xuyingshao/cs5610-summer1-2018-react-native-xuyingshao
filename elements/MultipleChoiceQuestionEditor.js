@@ -98,7 +98,12 @@ export default class MultipleChoiceQuestionEditor
                         {this.state.correctAnswer !== '' && ''}
                     </FormValidationMessage>
 
-                    <Button sytle={{padding: 10}}
+                    <Button buttonStyle={{
+                        width: 330,
+                        height: 40,
+                        marginTop: 1,
+                        margin: 10,
+                    }}
                             backgroundColor='#4c73c4'
                             color='white'
                             title='Save'
@@ -115,7 +120,7 @@ export default class MultipleChoiceQuestionEditor
                                                     'choices': this.state.choices,
                                                     'correctAnswer': this.state.correctAnswer,
                                                     'questionType': 'Multiple',
-                                                    'icon' : this.state.icon
+                                                    'icon': this.state.icon
                                                 }
                                             ),
                                             headers: {
@@ -144,15 +149,19 @@ export default class MultipleChoiceQuestionEditor
                                         .then(this.props.navigation.navigate('WidgetList'));
                                 }
                             }}/>
-                    <Button sytle={{padding: 10}}
-                            backgroundColor='#4682B4'
+                    <Button backgroundColor='#4682B4'
                             color='white'
                             title='Cancel'
                             onPress={() => {
                                 this.props.navigation.goBack()
+                            }}
+                            buttonStyle={{
+                                width: 330,
+                                height: 40,
+                                marginTop: 1,
+                                margin: 10,
                             }}/>
-                    <Button sytle={{padding: 10}}
-                            backgroundColor='#FA8072'
+                    <Button backgroundColor='#FA8072'
                             color='white'
                             title='Delete'
                             onPress={() => {
@@ -160,12 +169,24 @@ export default class MultipleChoiceQuestionEditor
                                     method: 'delete'
                                 })
                                     .then(this.props.navigation.navigate('WidgetList'));
+                            }}
+                            buttonStyle={{
+                                width: 330,
+                                height: 40,
+                                marginTop: 1,
+                                margin: 10,
                             }}/>
                 </ScrollView>}
 
                 <Button title="Preview"
                         onPress={() => {
                             this.setState({previewMode: !this.state.previewMode})
+                        }}
+                        buttonStyle={{
+                            width: 330,
+                            height: 40,
+                            marginTop: 1,
+                            margin: 10,
                         }}/>
 
                 {this.state.previewMode &&

@@ -66,7 +66,12 @@ export default class EssayQuestionEditor
                         {this.state.points !== 0 && ''}
                     </FormValidationMessage>
 
-                    <Button sytle={{padding: 10}}
+                    <Button buttonStyle={{
+                        width: 330,
+                        height: 40,
+                        marginTop: 1,
+                        margin: 10,
+                    }}
                             backgroundColor='#4c73c4'
                             color='white'
                             title='Save'
@@ -81,7 +86,7 @@ export default class EssayQuestionEditor
                                                     'description': this.state.description,
                                                     'points': this.state.points,
                                                     'questionType': 'Essay',
-                                                    'icon' : this.state.icon
+                                                    'icon': this.state.icon
                                                 }
                                             ),
                                             headers: {
@@ -108,15 +113,19 @@ export default class EssayQuestionEditor
                                         .then(this.props.navigation.navigate('WidgetList'));
                                 }
                             }}/>
-                    <Button sytle={{padding: 10}}
-                            backgroundColor='#4682B4'
+                    <Button backgroundColor='#4682B4'
                             color='white'
                             title='Cancel'
                             onPress={() => {
                                 this.props.navigation.goBack()
+                            }}
+                            buttonStyle={{
+                                width: 330,
+                                height: 40,
+                                marginTop: 1,
+                                margin: 10,
                             }}/>
-                    <Button sytle={{padding: 10}}
-                            backgroundColor='#FA8072'
+                    <Button backgroundColor='#FA8072'
                             color='white'
                             title='Delete'
                             onPress={() => {
@@ -124,12 +133,24 @@ export default class EssayQuestionEditor
                                     method: 'delete'
                                 })
                                     .then(this.props.navigation.navigate('WidgetList'));
+                            }}
+                            buttonStyle={{
+                                width: 330,
+                                height: 40,
+                                marginTop: 1,
+                                margin: 10,
                             }}/>
                 </ScrollView>}
 
                 <Button title="Preview"
                         onPress={() => {
                             this.setState({previewMode: !this.state.previewMode})
+                        }}
+                        buttonStyle={{
+                            width: 330,
+                            height: 40,
+                            marginTop: 1,
+                            margin: 10,
                         }}/>
 
                 {this.state.previewMode &&

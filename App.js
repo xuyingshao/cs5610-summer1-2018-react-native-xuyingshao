@@ -13,13 +13,13 @@ import EssayQuestionEditor from './elements/EssayQuestionEditor';
 import FillInBlankQuestionEditor from './elements/FillInBlankQuestionEditor';
 
 const App = createStackNavigator({
-    // CourseList: {
-    //     screen: CourseList,
-    //     navigationOptions: {
-    //         header: null,
-    //     }
-    // },
-    // ModuleList: {screen: ModuleList},
+    CourseList: {
+        screen: CourseList,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    ModuleList: {screen: ModuleList},
     LessonList: {screen: LessonList},
     WidgetList: {screen: WidgetList},
     ExamCreator,

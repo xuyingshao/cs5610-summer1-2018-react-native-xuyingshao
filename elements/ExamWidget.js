@@ -77,57 +77,57 @@ export default class ExamWidget
 
                 {this.state.questions.map((question) => {
                     return (
-                        <View>
+                        <View key={question.id}>
                             <ListItem leftIcon={{name: question.icon}}
-                                onPress={() => {
-                                    if (question.questionType === 'TrueFalse') {
-                                        this.props.navigation.navigate('TrueFalseQuestionEditor',
-                                            {
-                                                'questionId': question.id,
-                                                'examId': this.state.examId,
-                                                'title': question.title,
-                                                'description': question.description,
-                                                'points': question.points,
-                                                'isTrue': question.isTrue
-                                            })
-                                    }
-                                    if (question.questionType === 'Multiple') {
-                                        this.props.navigation.navigate('MultipleChoiceQuestionEditor',
-                                            {
-                                                'questionId': question.id,
-                                                'examId': this.state.examId,
-                                                'title': question.title,
-                                                'description': question.description,
-                                                'points': question.points,
-                                                'choices': question.choices,
-                                                'correctAnswer': question.correctAnswer
-                                            })
-                                    }
-                                    if (question.questionType === 'Essay') {
-                                        this.props.navigation.navigate('EssayQuestionEditor',
-                                            {
-                                                'questionId': question.id,
-                                                'examId': this.state.examId,
-                                                'title': question.title,
-                                                'description': question.description,
-                                                'points': question.points
-                                            })
-                                    }
-                                    if (question.questionType === 'FillInBlank') {
-                                        this.props.navigation.navigate('FillInBlankQuestionEditor',
-                                            {
-                                                'questionId': question.id,
-                                                'examId': this.state.examId,
-                                                'title': question.title,
-                                                'description': question.description,
-                                                'variables': question.variables,
-                                                'points': question.points
-                                            })
-                                    }
-                                }}
-                                title={question.title}
-                                key={question.id}
-                                subtitle={question.questionType}/>
+                                      onPress={() => {
+                                          if (question.questionType === 'TrueFalse') {
+                                              this.props.navigation.navigate('TrueFalseQuestionEditor',
+                                                  {
+                                                      'questionId': question.id,
+                                                      'examId': this.state.examId,
+                                                      'title': question.title,
+                                                      'description': question.description,
+                                                      'points': question.points,
+                                                      'isTrue': question.isTrue
+                                                  })
+                                          }
+                                          if (question.questionType === 'Multiple') {
+                                              this.props.navigation.navigate('MultipleChoiceQuestionEditor',
+                                                  {
+                                                      'questionId': question.id,
+                                                      'examId': this.state.examId,
+                                                      'title': question.title,
+                                                      'description': question.description,
+                                                      'points': question.points,
+                                                      'choices': question.choices,
+                                                      'correctAnswer': question.correctAnswer
+                                                  })
+                                          }
+                                          if (question.questionType === 'Essay') {
+                                              this.props.navigation.navigate('EssayQuestionEditor',
+                                                  {
+                                                      'questionId': question.id,
+                                                      'examId': this.state.examId,
+                                                      'title': question.title,
+                                                      'description': question.description,
+                                                      'points': question.points
+                                                  })
+                                          }
+                                          if (question.questionType === 'FillInBlank') {
+                                              this.props.navigation.navigate('FillInBlankQuestionEditor',
+                                                  {
+                                                      'questionId': question.id,
+                                                      'examId': this.state.examId,
+                                                      'title': question.title,
+                                                      'description': question.description,
+                                                      'variables': question.variables,
+                                                      'points': question.points
+                                                  })
+                                          }
+                                      }}
+                                      title={question.title}
+                                      key={question.id}
+                                      subtitle={question.questionType}/>
                         </View>
                     );
                 })}
@@ -151,12 +151,26 @@ export default class ExamWidget
                                 .then(() => {
                                     this.props.navigation.navigate('LessonList');
                                 })
+                        }}
+                        buttonStyle={{
+                            width: 330,
+                            height: 40,
+                            // borderColor: "transparent",
+                            marginTop: 2,
+                            margin: 10,
                         }}/>
                 <Button sytle={{padding: 20}}
                         backgroundColor='#4682B4'
                         title='Cancel'
                         onPress={() => {
                             this.props.navigation.navigate('LessonList');
+                        }}
+                        buttonStyle={{
+                            width: 330,
+                            height: 40,
+                            // borderColor: "transparent",
+                            marginTop: 1,
+                            margin: 10,
                         }}/>
                 <Button sytle={{padding: 20}}
                         backgroundColor='#FA8072'
@@ -168,6 +182,13 @@ export default class ExamWidget
                                 .then(() => {
                                     this.props.navigation.navigate('LessonList')
                                 })
+                        }}
+                        buttonStyle={{
+                            width: 330,
+                            height: 40,
+                            marginTop: 1,
+                            // borderColor: "transparent",
+                            margin: 10,
                         }}/>
             </ScrollView>
         );

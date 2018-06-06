@@ -11,7 +11,7 @@ const LESSON_API_URL = 'http://localhost:8080/api/lesson';
 export default class LessonServiceClient {
     constructor(singletonToken) {
         if (_singleton !== singletonToken) {
-            throw new Error('Singleton lesson service.!')
+            throw new Error('Singleton lesson service.')
         }
     }
 

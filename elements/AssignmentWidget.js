@@ -1,5 +1,5 @@
 import React from 'react';
-import {ScrollView, StyleSheet, View} from "react-native";
+import {ScrollView, StyleSheet, TextInput, View} from "react-native";
 import {FormLabel, FormInput, FormValidationMessage} from 'react-native-elements';
 import {Button, Text} from 'react-native-elements';
 
@@ -69,29 +69,20 @@ export default class AssignmentWidget
                         {this.state.points !== 0 && ''}
                     </FormValidationMessage>
 
-                    <Button sytle={{padding: 10}}
-                            backgroundColor='#4c73c4'
-                            title='Save Assignment'
-                            onPress={() => {
-                                if (this.state.assignmentId === 0) {
-                                    fetch(`http://localhost:8080/api/lesson/${this.state.lessonId}/assignment`,
-                                        {
-                                            method: 'post',
-                                            body: JSON.stringify({
-                                                'title': this.state.title,
-                                                'description': this.state.description,
-                                                'points': this.state.points,
-                                                'widgetType': 'Assignment'
-                                            }),
-                                            headers: {
-                                                'content-type': 'application/json'
-                                            }
-                                        })
-                                        .then(this.props.navigation.navigate('LessonList'));
-                                }
-                                if (this.state.assignmentId !== 0) {
-                                    fetch(`http://localhost:8080/api/assignment/${this.state.assignmentId}`, {
-                                        method: 'put',
+                    <Button buttonStyle={{
+                        width: 330,
+                        height: 40,
+                        // borderColor: "transparent",
+                        marginTop: 1,
+                        margin: 10,
+                    }}
+                        backgroundColor='#4c73c4'
+                        title='Save Assignment'
+                        onPress={() => {
+                            if (this.state.assignmentId === 0) {
+                                fetch(`http://localhost:8080/api/lesson/${this.state.lessonId}/assignment`,
+                                    {
+                                        method: 'post',
                                         body: JSON.stringify({
                                             'title': this.state.title,
                                             'description': this.state.description,
@@ -102,36 +93,94 @@ export default class AssignmentWidget
                                             'content-type': 'application/json'
                                         }
                                     })
-                                        .then(this.props.navigation.navigate('LessonList'));
-                                }
-                            }}/>
-                    <Button sytle={{padding: 10}}
-                            backgroundColor='#4682B4'
-                            color='white'
-                            title='Cancel'
-                            onPress={() => {
-                                this.props.navigation.goBack()
-                            }}/>
-                    <Button sytle={{padding: 10}}
-                            backgroundColor='#FA8072'
-                            title='Delete Assignment'
-                            onPress={() => {
+                                    .then(this.props.navigation.navigate('LessonList'));
+                            }
+                            if (this.state.assignmentId !== 0) {
                                 fetch(`http://localhost:8080/api/assignment/${this.state.assignmentId}`, {
-                                    method: 'delete'
+                                    method: 'put',
+                                    body: JSON.stringify({
+                                        'title': this.state.title,
+                                        'description': this.state.description,
+                                        'points': this.state.points,
+                                        'widgetType': 'Assignment'
+                                    }),
+                                    headers: {
+                                        'content-type': 'application/json'
+                                    }
                                 })
                                     .then(this.props.navigation.navigate('LessonList'));
-                            }}/>
+                            }
+                        }}/>
+                    <Button
+                        backgroundColor='#4682B4'
+                        color='white'
+                        title='Cancel'
+                        onPress={() => {
+                            this.props.navigation.goBack()
+                        }}
+                        buttonStyle={{
+                            width: 330,
+                            height: 40,
+                            // borderColor: "transparent",
+                            marginTop: 1,
+                            margin: 10,
+                        }}/>
+                    <Button
+                        backgroundColor='#FA8072'
+                        title='Delete Assignment'
+                        onPress={() => {
+                            fetch(`http://localhost:8080/api/assignment/${this.state.assignmentId}`, {
+                                method: 'delete'
+                            })
+                                .then(this.props.navigation.navigate('LessonList'));
+                        }}
+                        buttonStyle={{
+                            width: 330,
+                            height: 40,
+                            // borderColor: "transparent",
+                            marginTop: 1,
+                            margin: 10,
+                        }}/>
                 </ScrollView>}
 
                 <Button title="Preview"
                         onPress={() => {
                             this.setState({previewMode: !this.state.previewMode})
+                        }}
+                        buttonStyle={{
+                            width: 330,
+                            height: 40,
+                            // borderColor: "transparent",
+                            marginTop: 1,
+                            margin: 10,
                         }}/>
 
                 {this.state.previewMode &&
                 <ScrollView style={styles.textAreaContainer}>
-                    <Text h4>{this.state.description}</Text>
+                    <Text h4>{this.state.title}</Text>
+                    <Text h5>{this.state.description}</Text>
                     <Text h5>{this.state.points} pts</Text>
+                    <Text h4>Essay answer</Text>
+                    <TextInput style={styles.textAreaContainer}
+                               multiline={true}/>
+                    <Text h4>Upload a file
+                        <Button color='black'
+                                buttonStyle={{
+                                    backgroundColor: "lightgrey",
+                                    width: 120,
+                                    height: 40,
+                                    borderColor: "transparent",
+                                    borderWidth: 0,
+                                    borderRadius: 5,
+
+                                }}
+                                title='Choose File'/>
+                    </Text>
+                    <TextInput style={styles.textAreaContainer}>
+                        No file chosen
+                    </TextInput>
+                    <Text h4>Submit a link</Text>
+                    <TextInput style={styles.textAreaContainer}/>
                 </ScrollView>}
 
             </ScrollView>

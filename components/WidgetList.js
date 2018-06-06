@@ -20,8 +20,6 @@ export default class WidgetList
             widgets: []
         };
 
-        // this.widgetServiceClient = WidgetServiceClient.instance();
-
         this.widgetServiceClient = WidgetServiceClient.instance();
     }
 
@@ -34,19 +32,10 @@ export default class WidgetList
         this.setState({moduleId: moduleId});
         this.setState({lessonId: lessonId});
 
-
-        // FIXME
-        fetch(`http://localhost:8080/api/lesson/${lessonId}/widget`)
-            .then((response) => (response.json()))
+        this.widgetServiceClient.findAllWidgetsForLesson(lessonId)
             .then((widgets) => {
                 this.setState({widgets: widgets});
-            })
-
-        // this.widgetServiceClient.findAllWidgetsForLesson(lessonId)
-        //     .then((widgets) => {
-        //         this.setState({widgets: widgets});
-        //     });
-
+            });
     }
 
     render() {
@@ -54,37 +43,33 @@ export default class WidgetList
             <ScrollView>
                 {this.state.widgets.map((widget) => {
                     return (
-                        <View>
-                            <ListItem title={widget.title}
-                                      key={widget.id}
-                                      subtitle={widget.widgetType}
-                                      onPress={() => {
-                                          if (widget.widgetType === 'Exam') {
-                                              this.props.navigation.navigate('ExamWidget', {
-                                                  courseId: this.state.courseId,
-                                                  moduleId: this.state.moduleId,
-                                                  lessonId: this.state.lessonId,
-                                                  examId: widget.id,
-                                                  title: widget.title,
-                                                  description: widget.description
-                                                  // 'points': widget.points,
-                                                  // 'widget': widget
-                                              });
-                                          }
-                                          if (widget.widgetType === 'Assignment') {
-                                              this.props.navigation.navigate('AssignmentWidget', {
-                                                  courseId: this.state.courseId,
-                                                  moduleId: this.state.moduleId,
-                                                  lessonId: this.state.lessonId,
-                                                  assignmentId: widget.id,
-                                                  title: widget.title,
-                                                  description: widget.description,
-                                                  points: widget.points
-                                                  // 'widget': widget
-                                              });
-                                          }
-                                      }}/>
-                        </View>
+                        <ListItem title={widget.title}
+                                  key={widget.id}
+                                  subtitle={widget.widgetType}
+                                  onPress={() => {
+                                      if (widget.widgetType === 'Exam') {
+                                          this.props.navigation.navigate('ExamWidget', {
+                                              courseId: this.state.courseId,
+                                              moduleId: this.state.moduleId,
+                                              lessonId: this.state.lessonId,
+                                              examId: widget.id,
+                                              title: widget.title,
+                                              description: widget.description
+                                          });
+                                      }
+                                      if (widget.widgetType === 'Assignment') {
+                                          this.props.navigation.navigate('AssignmentWidget', {
+                                              courseId: this.state.courseId,
+                                              moduleId: this.state.moduleId,
+                                              lessonId: this.state.lessonId,
+                                              assignmentId: widget.id,
+                                              title: widget.title,
+                                              description: widget.description,
+                                              points: widget.points
+                                          });
+                                      }
+                                  }}/>
+
                     );
                 })}
                 <WidgetTypePicker navigation={this.props.navigation}/>

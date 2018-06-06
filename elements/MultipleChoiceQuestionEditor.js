@@ -3,6 +3,7 @@ import {ScrollView, StyleSheet, TextInput} from 'react-native';
 import {FormLabel, FormInput, FormValidationMessage} from 'react-native-elements';
 import {Button, Text} from 'react-native-elements';
 import CustomMultiPicker from 'react-native-multiple-select-list';
+import QuestionServiceClient from "../services/QuestionServiceClient";
 
 
 export default class MultipleChoiceQuestionEditor
@@ -24,6 +25,8 @@ export default class MultipleChoiceQuestionEditor
             previewMode: false,
             icon: 'list'
         }
+
+        this.questionServiceClient = QuestionServiceClient.instance();
     }
 
     componentDidMount() {
@@ -109,43 +112,29 @@ export default class MultipleChoiceQuestionEditor
                             title='Save'
                             onPress={() => {
                                 if (this.state.questionId === 0) {
-                                    fetch(`http://localhost:8080/api/exam/${this.state.examId}/choice`,
-                                        {
-                                            method: 'post',
-                                            body: JSON.stringify(
-                                                {
-                                                    'title': this.state.title,
-                                                    'description': this.state.description,
-                                                    'points': this.state.points,
-                                                    'choices': this.state.choices,
-                                                    'correctAnswer': this.state.correctAnswer,
-                                                    'questionType': 'Multiple',
-                                                    'icon': this.state.icon
-                                                }
-                                            ),
-                                            headers: {
-                                                'content-type': 'application/json'
-                                            }
-                                        })
+                                    let question = {
+                                        'title': this.state.title,
+                                        'description': this.state.description,
+                                        'points': this.state.points,
+                                        'choices': this.state.choices,
+                                        'correctAnswer': this.state.correctAnswer,
+                                        'questionType': 'Multiple',
+                                        'icon': this.state.icon
+                                    };
+
+                                    this.questionServiceClient.createMultipleChoiceQuestion(this.state.examId, question)
                                         .then(this.props.navigation.navigate('WidgetList'));
                                 }
                                 else {
-                                    fetch(`http://localhost:8080/api/multi/${this.state.questionId}`,
-                                        {
-                                            method: 'put',
-                                            body: JSON.stringify(
-                                                {
-                                                    'title': this.state.title,
-                                                    'description': this.state.description,
-                                                    'points': this.state.points,
-                                                    'choices': this.state.choices,
-                                                    'correctAnswer': this.state.correctAnswer
-                                                }
-                                            ),
-                                            headers: {
-                                                'content-type': 'application/json'
-                                            }
-                                        })
+                                    let question = {
+                                        'title': this.state.title,
+                                        'description': this.state.description,
+                                        'points': this.state.points,
+                                        'choices': this.state.choices,
+                                        'correctAnswer': this.state.correctAnswer
+                                    }
+
+                                    this.questionServiceClient.updateMultipleChoiceQuestion(this.state.questionId, question)
                                         .then(this.props.navigation.navigate('WidgetList'));
                                 }
                             }}/>
@@ -165,9 +154,7 @@ export default class MultipleChoiceQuestionEditor
                             color='white'
                             title='Delete'
                             onPress={() => {
-                                fetch(`http://localhost:8080/api/multi/${this.state.questionId}`, {
-                                    method: 'delete'
-                                })
+                                this.questionServiceClient.deleteMultipleChoiceQuestion(this.state.questionId)
                                     .then(this.props.navigation.navigate('WidgetList'));
                             }}
                             buttonStyle={{

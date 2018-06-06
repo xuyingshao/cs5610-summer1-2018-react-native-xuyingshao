@@ -2,6 +2,7 @@ import React from 'react';
 import {ScrollView, StyleSheet, TextInput, View} from "react-native";
 import {FormLabel, FormInput, FormValidationMessage} from 'react-native-elements';
 import {Button, Text} from 'react-native-elements';
+import WidgetServiceClient from "../services/WidgetServiceClient";
 
 
 export default class AssignmentWidget
@@ -21,6 +22,8 @@ export default class AssignmentWidget
             widget: {},
             previewMode: false
         }
+
+        this.widgetServiceClient = WidgetServiceClient.instance();
     }
 
     componentDidMount() {
@@ -72,75 +75,59 @@ export default class AssignmentWidget
                     <Button buttonStyle={{
                         width: 330,
                         height: 40,
-                        // borderColor: "transparent",
                         marginTop: 1,
                         margin: 10,
                     }}
-                        backgroundColor='#4c73c4'
-                        title='Save Assignment'
-                        onPress={() => {
-                            if (this.state.assignmentId === 0) {
-                                fetch(`http://localhost:8080/api/lesson/${this.state.lessonId}/assignment`,
-                                    {
-                                        method: 'post',
-                                        body: JSON.stringify({
-                                            'title': this.state.title,
-                                            'description': this.state.description,
-                                            'points': this.state.points,
-                                            'widgetType': 'Assignment'
-                                        }),
-                                        headers: {
-                                            'content-type': 'application/json'
-                                        }
-                                    })
-                                    .then(this.props.navigation.navigate('LessonList'));
-                            }
-                            if (this.state.assignmentId !== 0) {
-                                fetch(`http://localhost:8080/api/assignment/${this.state.assignmentId}`, {
-                                    method: 'put',
-                                    body: JSON.stringify({
+                            backgroundColor='#4c73c4'
+                            title='Save Assignment'
+                            onPress={() => {
+                                if (this.state.assignmentId === 0) {
+                                    let assignment = {
                                         'title': this.state.title,
                                         'description': this.state.description,
                                         'points': this.state.points,
                                         'widgetType': 'Assignment'
-                                    }),
-                                    headers: {
-                                        'content-type': 'application/json'
                                     }
-                                })
+
+                                    this.widgetServiceClient.createAssignment(this.state.lessonId, assignment)
+                                        .then(this.props.navigation.navigate('LessonList'));
+                                }
+                                if (this.state.assignmentId !== 0) {
+                                    let assignment = {
+                                        'title': this.state.title,
+                                        'description': this.state.description,
+                                        'points': this.state.points,
+                                        'widgetType': 'Assignment'
+                                    };
+
+                                    this.widgetServiceClient.updateAssignment(this.state.assignmentId, assignment)
+                                        .then(this.props.navigation.navigate('LessonList'));
+                                }
+                            }}/>
+                    <Button backgroundColor='#4682B4'
+                            color='white'
+                            title='Cancel'
+                            onPress={() => {
+                                this.props.navigation.goBack()
+                            }}
+                            buttonStyle={{
+                                width: 330,
+                                height: 40,
+                                marginTop: 1,
+                                margin: 10,
+                            }}/>
+                    <Button backgroundColor='#FA8072'
+                            title='Delete Assignment'
+                            onPress={() => {
+                                this.widgetServiceClient.deleteAssignment(this.state.assignmentId)
                                     .then(this.props.navigation.navigate('LessonList'));
-                            }
-                        }}/>
-                    <Button
-                        backgroundColor='#4682B4'
-                        color='white'
-                        title='Cancel'
-                        onPress={() => {
-                            this.props.navigation.goBack()
-                        }}
-                        buttonStyle={{
-                            width: 330,
-                            height: 40,
-                            // borderColor: "transparent",
-                            marginTop: 1,
-                            margin: 10,
-                        }}/>
-                    <Button
-                        backgroundColor='#FA8072'
-                        title='Delete Assignment'
-                        onPress={() => {
-                            fetch(`http://localhost:8080/api/assignment/${this.state.assignmentId}`, {
-                                method: 'delete'
-                            })
-                                .then(this.props.navigation.navigate('LessonList'));
-                        }}
-                        buttonStyle={{
-                            width: 330,
-                            height: 40,
-                            // borderColor: "transparent",
-                            marginTop: 1,
-                            margin: 10,
-                        }}/>
+                            }}
+                            buttonStyle={{
+                                width: 330,
+                                height: 40,
+                                marginTop: 1,
+                                margin: 10,
+                            }}/>
                 </ScrollView>}
 
                 <Button title="Preview"
@@ -150,7 +137,6 @@ export default class AssignmentWidget
                         buttonStyle={{
                             width: 330,
                             height: 40,
-                            // borderColor: "transparent",
                             marginTop: 1,
                             margin: 10,
                         }}/>

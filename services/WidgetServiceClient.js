@@ -2,9 +2,15 @@ let _singleton = Symbol();
 
 const COURSE_API_URL = 'http://localhost:8080/api/course';
 const LESSON_API_URL = 'http://localhost:8080/api/lesson';
+const ASSIGNMENT_API_URL = 'http://localhost:8080/api/assignment';
+const EXAM_API_URL = 'http://localhost:8080/api/exam';
+
 
 // const COURSE_API_URL = 'https://course-manager-jeanne.herokuapp.com/api/course';
 // const LESSON_API_URL = 'https://course-manager-jeanne.herokuapp.com/api/lesson';
+// const ASSIGNMENT_API_URL = 'https://course-manager-jeanne.herokuapp.com/api/assignment';
+// const EXAM_API_URL = 'https://course-manager-jeanne.herokuapp.com/api/exam';
+
 
 export default class WidgetServiceClient {
     constructor(singletonToken) {
@@ -25,11 +31,56 @@ export default class WidgetServiceClient {
             .then((response) => (response.json()));
     }
 
-    // saveAssignment(lessonId) {
-    //
-    // }
-    //
-    // updateAssignment(lessonId) {
-    //
-    // }
+    createAssignment(lessonId, assignment) {
+        return fetch(LESSON_API_URL + '/' + lessonId + '/assignment',
+            {
+                method: 'post',
+                body: JSON.stringify(assignment),
+                headers: {
+                    'content-type': 'application/json'
+                }
+            });
+    }
+
+    updateAssignment(assignmentId, assignment) {
+        return fetch(ASSIGNMENT_API_URL + '/' + assignmentId, {
+            method: 'put',
+            body: JSON.stringify(assignment),
+            headers: {
+                'content-type': 'application/json'
+            }
+        });
+    }
+
+    deleteAssignment(assignmentId) {
+        return fetch(ASSIGNMENT_API_URL + '/' + assignmentId, {
+            method: 'delete'});
+    }
+
+    createExam(lessonId, exam) {
+        return fetch(LESSON_API_URL + '/' + lessonId + '/exam', {
+            method: 'post',
+            body: JSON.stringify(exam),
+            headers: {
+                'content-type': 'application/json'
+            }
+        })
+            .then(response => response.json());
+    }
+
+    updateExam(examId, exam) {
+        return fetch(EXAM_API_URL + '/' + examId, {
+            method: 'put',
+            body: JSON.stringify(exam),
+            headers: {
+                'content-type': 'application/json'
+            }
+        })
+    }
+
+    deleteExam(examId) {
+        return fetch(EXAM_API_URL + '/' + examId, {
+            method: 'delete'
+        })
+    }
 }

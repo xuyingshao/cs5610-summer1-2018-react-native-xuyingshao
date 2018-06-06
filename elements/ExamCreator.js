@@ -2,6 +2,7 @@ import React from 'react';
 import {View} from 'react-native';
 import {Button, Text} from 'react-native-elements';
 import {FormLabel, FormInput, FormValidationMessage} from 'react-native-elements';
+import WidgetServiceClient from "../services/WidgetServiceClient";
 
 
 export default class ExamCreator
@@ -18,6 +19,8 @@ export default class ExamCreator
             description: '',
             // points: 0
         };
+
+        this.widgetServiceClient = WidgetServiceClient.instance();
     }
 
     componentDidMount() {
@@ -59,19 +62,14 @@ export default class ExamCreator
                 <Button backgroundColor="#4c73c4"
                         title="Create Exam"
                         onPress={() => {
-                            fetch(`http://localhost:8080/api/lesson/${this.state.lessonId}/exam`, {
-                                method: 'post',
-                                body: JSON.stringify({
-                                    'title': this.state.title,
-                                    'description': this.state.description,
-                                    // 'points': this.state.points,
-                                    'widgetType': 'Exam'
-                                }),
-                                headers: {
-                                    'content-type': 'application/json'
-                                }
-                            })
-                                .then(response => response.json())
+                            let exam = {
+                                'title': this.state.title,
+                                'description': this.state.description,
+                                // 'points': this.state.points,
+                                'widgetType': 'Exam'
+                            };
+
+                            this.widgetServiceClient.createExam(this.state.lessonId, exam)
                                 .then((exam) => {
                                     this.props.navigation.navigate('ExamWidget', {
                                         lessonId: this.state.lessonId,
@@ -80,11 +78,23 @@ export default class ExamCreator
                                         description: exam.description,
                                     })
                                 });
+                        }}
+                        buttonStyle={{
+                            width: 330,
+                            height: 40,
+                            marginTop: 1,
+                            margin: 10,
                         }}/>
                 <Button backgroundColor="#4682B4"
                         title="Cancel"
                         onPress={() => {
                             this.props.navigation.goBack()
+                        }}
+                        buttonStyle={{
+                            width: 330,
+                            height: 40,
+                            marginTop: 1,
+                            margin: 10,
                         }}/>
             </View>
         );

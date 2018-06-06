@@ -2,6 +2,7 @@ import React from 'react';
 import {ScrollView, TextInput, StyleSheet} from 'react-native';
 import {FormLabel, FormInput, FormValidationMessage} from 'react-native-elements';
 import {Button, CheckBox, Text} from 'react-native-elements';
+import QuestionServiceClient from "../services/QuestionServiceClient";
 
 
 export default class EssayQuestionEditor
@@ -21,6 +22,8 @@ export default class EssayQuestionEditor
             previewMode: false,
             icon: 'subject'
         };
+
+        this.questionServiceClient = QuestionServiceClient.instance();
     }
 
     componentDidMount() {
@@ -44,7 +47,8 @@ export default class EssayQuestionEditor
                 {!this.state.previewMode &&
                 <ScrollView>
                     <FormLabel>Title</FormLabel>
-                    <FormInput onChangeText={(text) => this.setState({title: text})}>{this.state.title}</FormInput>
+                    <FormInput onChangeText={(text) =>
+                        this.setState({title: text})}>{this.state.title}</FormInput>
                     <FormValidationMessage>
                         {this.state.title === '' && 'Title is required'}
                         {this.state.title !== '' && ''}
@@ -52,7 +56,8 @@ export default class EssayQuestionEditor
 
                     <FormLabel>Description</FormLabel>
                     <FormInput
-                        onChangeText={(text) => this.setState({description: text})}>{this.state.description}</FormInput>
+                        onChangeText={(text) =>
+                            this.setState({description: text})}>{this.state.description}</FormInput>
                     <FormValidationMessage>
                         {this.state.description === '' && 'Description is required'}
                         {this.state.description !== '' && ''}
@@ -60,7 +65,8 @@ export default class EssayQuestionEditor
 
                     <FormLabel>Points</FormLabel>
                     <FormInput
-                        onChangeText={(text) => this.setState({points: text.valueOf()})}>{this.state.points}</FormInput>
+                        onChangeText={(text) =>
+                            this.setState({points: text.valueOf()})}>{this.state.points}</FormInput>
                     <FormValidationMessage>
                         {this.state.points === 0 && 'Points is required'}
                         {this.state.points !== 0 && ''}
@@ -77,39 +83,25 @@ export default class EssayQuestionEditor
                             title='Save'
                             onPress={() => {
                                 if (this.state.questionId == 0) {
-                                    fetch(`http://localhost:8080/api/exam/${this.state.examId}/essay`,
-                                        {
-                                            method: 'post',
-                                            body: JSON.stringify(
-                                                {
-                                                    'title': this.state.title,
-                                                    'description': this.state.description,
-                                                    'points': this.state.points,
-                                                    'questionType': 'Essay',
-                                                    'icon': this.state.icon
-                                                }
-                                            ),
-                                            headers: {
-                                                'content-type': 'application/json'
-                                            }
-                                        })
+                                    let question = {
+                                        'title': this.state.title,
+                                        'description': this.state.description,
+                                        'points': this.state.points,
+                                        'questionType': 'Essay',
+                                        'icon': this.state.icon
+                                    };
+
+                                    this.questionServiceClient.createEssayQuestion(this.state.examId, question)
                                         .then(this.props.navigation.navigate('WidgetList'));
                                 }
                                 else {
-                                    fetch(`http://localhost:8080/api/essay/${this.state.questionId}`,
-                                        {
-                                            method: 'put',
-                                            body: JSON.stringify(
-                                                {
-                                                    'title': this.state.title,
-                                                    'description': this.state.description,
-                                                    'points': this.state.points,
-                                                }
-                                            ),
-                                            headers: {
-                                                'content-type': 'application/json'
-                                            }
-                                        })
+                                    let question = {
+                                        'title': this.state.title,
+                                        'description': this.state.description,
+                                        'points': this.state.points,
+                                    };
+
+                                    this.questionServiceClient.updateEssayQuestion(this.state.questionId, question)
                                         .then(this.props.navigation.navigate('WidgetList'));
                                 }
                             }}/>
@@ -129,9 +121,7 @@ export default class EssayQuestionEditor
                             color='white'
                             title='Delete'
                             onPress={() => {
-                                fetch(`http://localhost:8080/api/essay/${this.state.questionId}`, {
-                                    method: 'delete'
-                                })
+                                this.questionServiceClient.deleteEssayQuestion(this.state.questionId)
                                     .then(this.props.navigation.navigate('WidgetList'));
                             }}
                             buttonStyle={{

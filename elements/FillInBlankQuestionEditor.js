@@ -2,6 +2,7 @@ import React from 'react';
 import {ScrollView, StyleSheet, TextInput, View} from 'react-native';
 import {FormLabel, FormInput, FormValidationMessage} from 'react-native-elements';
 import {Button, CheckBox, Text} from 'react-native-elements';
+import QuestionServiceClient from "../services/QuestionServiceClient";
 
 
 export default class EssayQuestionEditor
@@ -22,6 +23,8 @@ export default class EssayQuestionEditor
             previewMode: false,
             icon: 'code'
         };
+
+        this.questionServiceClient = QuestionServiceClient.instance();
     }
 
     componentDidMount() {
@@ -30,7 +33,7 @@ export default class EssayQuestionEditor
         const title = this.props.navigation.getParam('title', '');
         const description = this.props.navigation.getParam('description', '');
         const points = this.props.navigation.getParam('points', 0);
-        const variables = this.props.navigation.getParam('variables', 0);
+        const variables = this.props.navigation.getParam('variables', '');
 
         this.setState({questionId: questionId});
         this.setState({examId: examId});
@@ -38,7 +41,6 @@ export default class EssayQuestionEditor
         this.setState({description: description});
         this.setState({points: points});
         this.setState({variables: variables});
-
     }
 
 
@@ -98,41 +100,27 @@ export default class EssayQuestionEditor
                             title='Save'
                             onPress={() => {
                                 if (this.state.questionId == 0) {
-                                    fetch(`http://localhost:8080/api/exam/${this.state.examId}/blanks`,
-                                        {
-                                            method: 'post',
-                                            body: JSON.stringify(
-                                                {
-                                                    'title': this.state.title,
-                                                    'description': this.state.description,
-                                                    'points': this.state.points,
-                                                    'variables': this.state.variables,
-                                                    'questionType': 'FillInBlank',
-                                                    'icon': this.state.icon
-                                                }
-                                            ),
-                                            headers: {
-                                                'content-type': 'application/json'
-                                            }
-                                        })
+                                    let question = {
+                                        'title': this.state.title,
+                                        'description': this.state.description,
+                                        'points': this.state.points,
+                                        'variables': this.state.variables,
+                                        'questionType': 'FillInBlank',
+                                        'icon': this.state.icon
+                                    };
+
+                                    this.questionServiceClient.createFillInBlanksQuestion(this.state.examId, question)
                                         .then(this.props.navigation.navigate('WidgetList'));
                                 }
                                 else {
-                                    fetch(`http://localhost:8080/api/blanks/${this.state.questionId}`,
-                                        {
-                                            method: 'put',
-                                            body: JSON.stringify(
-                                                {
-                                                    'title': this.state.title,
-                                                    'description': this.state.description,
-                                                    'points': this.state.points,
-                                                    'variables': '',
-                                                }
-                                            ),
-                                            headers: {
-                                                'content-type': 'application/json'
-                                            }
-                                        })
+                                    let question = {
+                                        'title': this.state.title,
+                                        'description': this.state.description,
+                                        'points': this.state.points,
+                                        'variables': this.state.variables
+                                    };
+
+                                    this.questionServiceClient.updateFillInBlanksQuestion(this.state.questionId, question)
                                         .then(this.props.navigation.navigate('WidgetList'));
                                 }
                             }}/>
@@ -152,9 +140,7 @@ export default class EssayQuestionEditor
                             color='white'
                             title='Delete'
                             onPress={() => {
-                                fetch(`http://localhost:8080/api/blanks/${this.state.questionId}`, {
-                                    method: 'delete'
-                                })
+                                this.questionServiceClient.deleteFillInBlanksQuestion(this.state.questionId)
                                     .then(this.props.navigation.navigate('WidgetList'));
                             }}
                             buttonStyle={{
@@ -180,8 +166,8 @@ export default class EssayQuestionEditor
                 <ScrollView style={styles.textAreaContainer}>
                     <Text h4>{this.state.description}</Text>
                     <Text h5>{this.state.points} pts</Text>
-                    {texts.map((text) => (
-                        parseBlank(text)
+                    {texts.map((text, index) => (
+                        parseBlank(text, index)
                     ))}
                 </ScrollView>}
             </ScrollView>
@@ -189,7 +175,7 @@ export default class EssayQuestionEditor
     }
 }
 
-const parseBlank = (text) => {
+const parseBlank = (text, index) => {
     let open = 0;
     let previousClose = -1;
     let close = 0;
@@ -213,7 +199,7 @@ const parseBlank = (text) => {
     }
 
     return (
-        <View style={styles.row}>
+        <View style={styles.row} key={index}>
             {expressions.map((expression) => {
                 if (expression === '[]') {
                     return (<TextInput style={styles.input}/>);

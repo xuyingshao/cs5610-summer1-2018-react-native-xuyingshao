@@ -3,6 +3,7 @@ import {ScrollView, StyleSheet} from 'react-native';
 import {FormLabel, FormInput, FormValidationMessage} from 'react-native-elements';
 import {Button, CheckBox, Text} from 'react-native-elements';
 import CustomMultiPicker from "react-native-multiple-select-list";
+import QuestionServiceClient from "../services/QuestionServiceClient";
 
 
 export default class TrueFalseQuestionEditor
@@ -23,6 +24,8 @@ export default class TrueFalseQuestionEditor
             previewMode: false,
             icon: 'check'
         };
+
+        this.questionServiceClient = QuestionServiceClient.instance();
     }
 
     componentDidMount() {
@@ -89,41 +92,27 @@ export default class TrueFalseQuestionEditor
                             title='Save'
                             onPress={() => {
                                 if (this.state.questionId == 0) {
-                                    fetch(`http://localhost:8080/api/exam/${this.state.examId}/truefalse`,
-                                        {
-                                            method: 'post',
-                                            body: JSON.stringify(
-                                                {
-                                                    'title': this.state.title,
-                                                    'description': this.state.description,
-                                                    'isTrue': this.state.isTrue,
-                                                    'points': this.state.points,
-                                                    'questionType': 'TrueFalse',
-                                                    'icon': this.state.icon
-                                                }
-                                            ),
-                                            headers: {
-                                                'content-type': 'application/json'
-                                            }
-                                        })
+                                    let question = {
+                                        'title': this.state.title,
+                                        'description': this.state.description,
+                                        'isTrue': this.state.isTrue,
+                                        'points': this.state.points,
+                                        'questionType': 'TrueFalse',
+                                        'icon': this.state.icon
+                                    };
+
+                                    this.questionServiceClient.createTrueFalseQuestion(this.state.examId, question)
                                         .then(this.props.navigation.navigate('WidgetList'));
                                 }
                                 else {
-                                    fetch(`http://localhost:8080/api/truefalse/${this.state.questionId}`,
-                                        {
-                                            method: 'put',
-                                            body: JSON.stringify(
-                                                {
-                                                    'title': this.state.title,
-                                                    'description': this.state.description,
-                                                    'isTrue': this.state.isTrue,
-                                                    'points': this.state.points,
-                                                }
-                                            ),
-                                            headers: {
-                                                'content-type': 'application/json'
-                                            }
-                                        })
+                                    let question = {
+                                        'title': this.state.title,
+                                        'description': this.state.description,
+                                        'isTrue': this.state.isTrue,
+                                        'points': this.state.points,
+                                    };
+
+                                    this.questionServiceClient.updateTrueFalseQuestion(this.state.questionId, question)
                                         .then(this.props.navigation.navigate('WidgetList'));
                                 }
                             }}/>
@@ -143,9 +132,7 @@ export default class TrueFalseQuestionEditor
                             color='white'
                             title='Delete'
                             onPress={() => {
-                                fetch(`http://localhost:8080/api/truefalse/${this.state.questionId}`, {
-                                    method: 'delete'
-                                })
+                                this.questionServiceClient.deleteTrueFalseQuestion(this.state.questionId)
                                     .then(this.props.navigation.navigate('WidgetList'));
                             }}
                             buttonStyle={{

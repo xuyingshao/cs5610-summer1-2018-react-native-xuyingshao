@@ -5,6 +5,8 @@ import {FormLabel, FormInput, FormValidationMessage} from "react-native-elements
 import QuestionTypeButtonGroupChooser from "./QuestionTypeButtonGroupChooser";
 import QuestionList from "../components/QuestionList";
 import {Alert} from "react-native";
+import WidgetServiceClient from "../services/WidgetServiceClient";
+import QuestionServiceClient from "../services/QuestionServiceClient";
 
 
 export default class ExamWidget
@@ -23,6 +25,9 @@ export default class ExamWidget
             // points: 0,
             questions: []
         }
+
+        this.widgetServiceClient = WidgetServiceClient.instance();
+        this.questionServiceClient = QuestionServiceClient.instance();
     }
 
     componentDidMount() {
@@ -37,9 +42,7 @@ export default class ExamWidget
         this.setState({title: title});
         this.setState({description: description});
 
-        // FIXME
-        fetch(`http://localhost:8080/api/exam/${examId}/question`)
-            .then((response) => (response.json()))
+        this.questionServiceClient.findAllQuestionsForExam(examId)
             .then((questions) => {
                 this.setState({questions: questions});
             })
@@ -134,20 +137,15 @@ export default class ExamWidget
 
                 <QuestionTypeButtonGroupChooser navigation={this.props.navigation}/>
 
-                <Button sytle={{padding: 20}}
-                        backgroundColor='#4c73c4'
+                <Button backgroundColor='#4c73c4'
                         title='Save Exam'
                         onPress={() => {
-                            fetch(`http://localhost:8080/api/exam/${this.state.examId}`, {
-                                method: 'put',
-                                body: JSON.stringify({
-                                    'title': this.state.title,
-                                    'description': this.state.description,
-                                }),
-                                headers: {
-                                    'content-type': 'application/json'
-                                }
-                            })
+                            let exam = {
+                                'title': this.state.title,
+                                'description': this.state.description,
+                            };
+
+                            this.widgetServiceClient.updateExam(this.state.examId, exam)
                                 .then(() => {
                                     this.props.navigation.navigate('LessonList');
                                 })
@@ -155,12 +153,10 @@ export default class ExamWidget
                         buttonStyle={{
                             width: 330,
                             height: 40,
-                            // borderColor: "transparent",
                             marginTop: 2,
                             margin: 10,
                         }}/>
-                <Button sytle={{padding: 20}}
-                        backgroundColor='#4682B4'
+                <Button backgroundColor='#4682B4'
                         title='Cancel'
                         onPress={() => {
                             this.props.navigation.navigate('LessonList');
@@ -168,17 +164,13 @@ export default class ExamWidget
                         buttonStyle={{
                             width: 330,
                             height: 40,
-                            // borderColor: "transparent",
                             marginTop: 1,
                             margin: 10,
                         }}/>
-                <Button sytle={{padding: 20}}
-                        backgroundColor='#FA8072'
+                <Button backgroundColor='#FA8072'
                         title='Delete Exam'
                         onPress={() => {
-                            fetch(`http://localhost:8080/api/exam/${this.state.examId}`, {
-                                method: 'delete'
-                            })
+                            this.widgetServiceClient.deleteExam(this.state.examId)
                                 .then(() => {
                                     this.props.navigation.navigate('LessonList')
                                 })
@@ -187,7 +179,6 @@ export default class ExamWidget
                             width: 330,
                             height: 40,
                             marginTop: 1,
-                            // borderColor: "transparent",
                             margin: 10,
                         }}/>
             </ScrollView>

@@ -55,11 +55,6 @@ export default class ExamWidget
     render() {
         return (
             <ScrollView>
-                // FIXME
-                {/*<QuestionList navigation={this.props.navigation}*/}
-                {/*examId={this.state.examId}*/}
-                {/*questions={this.state.questions}/>*/}
-
                 <FormLabel>Title</FormLabel>
                 <FormInput onChangeText={(text) => {
                     this.setState({title: text});
@@ -78,62 +73,66 @@ export default class ExamWidget
                     {this.state.description !== '' && ''}
                 </FormValidationMessage>
 
-                {this.state.questions.map((question) => {
-                    return (
-                        <View key={question.id}>
-                            <ListItem leftIcon={{name: question.icon}}
-                                      onPress={() => {
-                                          if (question.questionType === 'TrueFalse') {
-                                              this.props.navigation.navigate('TrueFalseQuestionEditor',
-                                                  {
-                                                      'questionId': question.id,
-                                                      'examId': this.state.examId,
-                                                      'title': question.title,
-                                                      'description': question.description,
-                                                      'points': question.points,
-                                                      'isTrue': question.isTrue
-                                                  })
-                                          }
-                                          if (question.questionType === 'Multiple') {
-                                              this.props.navigation.navigate('MultipleChoiceQuestionEditor',
-                                                  {
-                                                      'questionId': question.id,
-                                                      'examId': this.state.examId,
-                                                      'title': question.title,
-                                                      'description': question.description,
-                                                      'points': question.points,
-                                                      'choices': question.choices,
-                                                      'correctAnswer': question.correctAnswer
-                                                  })
-                                          }
-                                          if (question.questionType === 'Essay') {
-                                              this.props.navigation.navigate('EssayQuestionEditor',
-                                                  {
-                                                      'questionId': question.id,
-                                                      'examId': this.state.examId,
-                                                      'title': question.title,
-                                                      'description': question.description,
-                                                      'points': question.points
-                                                  })
-                                          }
-                                          if (question.questionType === 'FillInBlank') {
-                                              this.props.navigation.navigate('FillInBlankQuestionEditor',
-                                                  {
-                                                      'questionId': question.id,
-                                                      'examId': this.state.examId,
-                                                      'title': question.title,
-                                                      'description': question.description,
-                                                      'variables': question.variables,
-                                                      'points': question.points
-                                                  })
-                                          }
-                                      }}
-                                      title={question.title}
-                                      key={question.id}
-                                      subtitle={question.questionType}/>
-                        </View>
-                    );
-                })}
+                <QuestionList navigation={this.props.navigation}
+                              examId={this.state.examId}
+                              questions={this.state.questions}/>
+
+                {/*{this.state.questions.map((question) => {*/}
+                    {/*return (*/}
+                        {/*<View key={question.id}>*/}
+                            {/*<ListItem leftIcon={{name: question.icon}}*/}
+                                      {/*onPress={() => {*/}
+                                          {/*if (question.questionType === 'TrueFalse') {*/}
+                                              {/*this.props.navigation.navigate('TrueFalseQuestionEditor',*/}
+                                                  {/*{*/}
+                                                      {/*'questionId': question.id,*/}
+                                                      {/*'examId': this.state.examId,*/}
+                                                      {/*'title': question.title,*/}
+                                                      {/*'description': question.description,*/}
+                                                      {/*'points': question.points,*/}
+                                                      {/*'isTrue': question.isTrue*/}
+                                                  {/*})*/}
+                                          {/*}*/}
+                                          {/*if (question.questionType === 'Multiple') {*/}
+                                              {/*this.props.navigation.navigate('MultipleChoiceQuestionEditor',*/}
+                                                  {/*{*/}
+                                                      {/*'questionId': question.id,*/}
+                                                      {/*'examId': this.state.examId,*/}
+                                                      {/*'title': question.title,*/}
+                                                      {/*'description': question.description,*/}
+                                                      {/*'points': question.points,*/}
+                                                      {/*'choices': question.choices,*/}
+                                                      {/*'correctAnswer': question.correctAnswer*/}
+                                                  {/*})*/}
+                                          {/*}*/}
+                                          {/*if (question.questionType === 'Essay') {*/}
+                                              {/*this.props.navigation.navigate('EssayQuestionEditor',*/}
+                                                  {/*{*/}
+                                                      {/*'questionId': question.id,*/}
+                                                      {/*'examId': this.state.examId,*/}
+                                                      {/*'title': question.title,*/}
+                                                      {/*'description': question.description,*/}
+                                                      {/*'points': question.points*/}
+                                                  {/*})*/}
+                                          {/*}*/}
+                                          {/*if (question.questionType === 'FillInBlank') {*/}
+                                              {/*this.props.navigation.navigate('FillInBlankQuestionEditor',*/}
+                                                  {/*{*/}
+                                                      {/*'questionId': question.id,*/}
+                                                      {/*'examId': this.state.examId,*/}
+                                                      {/*'title': question.title,*/}
+                                                      {/*'description': question.description,*/}
+                                                      {/*'variables': question.variables,*/}
+                                                      {/*'points': question.points*/}
+                                                  {/*})*/}
+                                          {/*}*/}
+                                      {/*}}*/}
+                                      {/*title={question.title}*/}
+                                      {/*key={question.id}*/}
+                                      {/*subtitle={question.questionType}/>*/}
+                        {/*</View>*/}
+                    {/*);*/}
+                {/*})}*/}
 
                 <QuestionTypeButtonGroupChooser navigation={this.props.navigation}/>
 

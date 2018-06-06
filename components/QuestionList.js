@@ -28,7 +28,6 @@ export default class QuestionList
     render() {
         return (
             <ScrollView>
-                <Text h4> in question list: {this.state.examId}</Text>
                 {this.state.questions.map((question) => {
                     return (
                         <View key={question.id}>

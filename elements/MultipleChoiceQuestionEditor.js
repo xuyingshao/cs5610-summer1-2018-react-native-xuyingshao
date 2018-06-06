@@ -207,7 +207,7 @@ const styles = StyleSheet.create({
         margin: 10
     },
     textArea: {
-        height: 50,
+        height: 80,
         justifyContent: "flex-start"
     }
 });

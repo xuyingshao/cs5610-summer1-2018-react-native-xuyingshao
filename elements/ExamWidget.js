@@ -1,6 +1,7 @@
 import React from 'react';
 import {ScrollView} from "react-native";
 import {FormLabel, FormInput, FormValidationMessage} from "react-native-elements";
+import {Button} from "react-native-elements";
 import QuestionTypeButtonGroupChooser from "./QuestionTypeButtonGroupChooser";
 import QuestionList from "../components/QuestionList";
 import WidgetServiceClient from "../services/WidgetServiceClient";

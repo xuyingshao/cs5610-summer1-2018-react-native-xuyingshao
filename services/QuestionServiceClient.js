@@ -55,7 +55,7 @@ export default class QuestionServiceClient {
     deleteMultipleChoiceQuestion(questionId) {
         return fetch(MULTI_API_URL + '/' + questionId, {
             method: 'delete'
-        })
+        });
     }
 
 
@@ -80,7 +80,7 @@ export default class QuestionServiceClient {
     deleteTrueFalseQuestion(questionId) {
         return fetch(TRUEFALSE_API_URL + '/' + questionId, {
             method: 'delete'
-        })
+        });
     }
 
     createEssayQuestion(examId, question) {
@@ -104,7 +104,7 @@ export default class QuestionServiceClient {
     deleteEssayQuestion(questionId) {
         return fetch(ESSAY_API_URL + '/' + questionId, {
             method: 'delete'
-        })
+        });
     }
 
     createFillInBlanksQuestion(examId, question) {
@@ -128,6 +128,6 @@ export default class QuestionServiceClient {
     deleteFillInBlanksQuestion(questionId) {
         return fetch(BLANK_API_URL + '/' + questionId, {
             method: 'delete'
-        })
+        });
     }
 }

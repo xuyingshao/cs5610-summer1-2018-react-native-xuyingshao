@@ -47,6 +47,10 @@ export default class MultipleChoiceQuestionEditor
         this.setState({correctAnswer: correctAnswer});
     }
 
+    componentWillUnmount() {
+        this.props.navigation.state.params.onGoBack();
+    }
+
     render() {
         const options = this.state.choices.split('\n');
 
@@ -156,6 +160,7 @@ export default class MultipleChoiceQuestionEditor
                             onPress={() => {
                                 this.questionServiceClient.deleteMultipleChoiceQuestion(this.state.questionId)
                                     .then(this.props.navigation.navigate('ExamWidget', {examId: this.state.examId}));
+
                             }}
                             buttonStyle={{
                                 width: 330,

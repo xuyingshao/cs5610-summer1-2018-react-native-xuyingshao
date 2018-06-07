@@ -43,6 +43,9 @@ export default class EssayQuestionEditor
         this.setState({variables: variables});
     }
 
+    componentWillUnmount() {
+        this.props.navigation.state.params.onGoBack();
+    }
 
     render() {
         const texts = this.state.variables.split('\n');

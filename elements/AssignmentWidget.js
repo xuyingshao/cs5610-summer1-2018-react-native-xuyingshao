@@ -40,6 +40,10 @@ export default class AssignmentWidget
         this.setState({points: points});
     }
 
+    componentWillUnmount() {
+        this.props.navigation.state.params.onGoBack();
+    }
+
     render() {
         return (
             <ScrollView>

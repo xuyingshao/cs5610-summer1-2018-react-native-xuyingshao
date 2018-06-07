@@ -50,6 +50,15 @@ export default class WidgetList
             });
     }
 
+
+    refresh = () => {
+        this.widgetServiceClient.findAllWidgetsForLesson(this.state.lessonId)
+                .then((widgets) => {
+                    this.setState({widgets: widgets});
+                });
+    };
+
+
     render() {
         return (
             <ScrollView>
@@ -66,7 +75,8 @@ export default class WidgetList
                                               lessonId: this.state.lessonId,
                                               examId: widget.id,
                                               title: widget.title,
-                                              description: widget.description
+                                              description: widget.description,
+                                              onGoBack: () => this.refresh()
                                           });
                                       }
                                       if (widget.widgetType === 'Assignment') {
@@ -77,7 +87,8 @@ export default class WidgetList
                                               assignmentId: widget.id,
                                               title: widget.title,
                                               description: widget.description,
-                                              points: widget.points
+                                              points: widget.points,
+                                              onGoBack: () => this.refresh()
                                           });
                                       }
                                   }}/>

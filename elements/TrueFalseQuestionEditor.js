@@ -44,6 +44,9 @@ export default class TrueFalseQuestionEditor
         this.setState({isTrue: isTrue});
     }
 
+    componentWillUnmount() {
+        this.props.navigation.state.params.onGoBack();
+    }
 
     render() {
         return (

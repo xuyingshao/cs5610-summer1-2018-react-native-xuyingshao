@@ -40,6 +40,9 @@ export default class EssayQuestionEditor
         this.setState({points: points});
     }
 
+    componentWillUnmount() {
+        this.props.navigation.state.params.onGoBack();
+    }
 
     render() {
         return (

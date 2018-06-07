@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Picker} from 'react-native';
 import {Button, Text} from 'react-native-elements';
+import WidgetServiceClient from "../services/WidgetServiceClient";
 
 
 export default class WidgetTypePicker
@@ -13,6 +14,8 @@ export default class WidgetTypePicker
             widgetType: 'AS',
             lessonId: 0
         };
+
+        this.widgetServiceClient = WidgetServiceClient.instance();
     }
 
     componentDidMount() {
@@ -24,6 +27,13 @@ export default class WidgetTypePicker
         // const lessonId = this.props.navigation.getParam('lessonId', 0);
         this.setState({lessonId: newProps.lessonId});
     }
+
+    refresh = () => {
+        this.widgetServiceClient.findAllWidgetsForLesson(this.state.lessonId)
+            .then((widgets) => {
+                this.setState({widgets: widgets});
+            });
+    };
 
     render() {
         return (
@@ -44,10 +54,15 @@ export default class WidgetTypePicker
                         title='Add Widget'
                         onPress={() => {
                             if (this.state.widgetType === 'AS') {
-                                this.props.navigation.navigate('AssignmentWidget', {lessonId: this.state.lessonId});
+                                this.props.navigation.navigate('AssignmentWidget', {
+                                    lessonId: this.state.lessonId,
+                                    onGoBack: () => this.refresh()
+                                });
                             }
                             if (this.state.widgetType === 'EX') {
-                                this.props.navigation.navigate('ExamCreator', {lessonId: this.state.lessonId});
+                                this.props.navigation.navigate('ExamCreator', {
+                                    lessonId: this.state.lessonId,
+                                    onGoBack: () => this.refresh()});
                             }
                         }}/>
             </View>

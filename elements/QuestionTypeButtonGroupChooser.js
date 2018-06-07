@@ -26,6 +26,9 @@ export default class QuestionTypeButtonGroupChooser
         this.setState({selectedTypeIndex: newTypeIndex});
     };
 
+    hardRefresh = () => {
+        this.props.refresh();
+    };
 
     render() {
         const questionTypes = [
@@ -47,20 +50,24 @@ export default class QuestionTypeButtonGroupChooser
                         title='Add Question'
                         onPress={() => {
                             if (this.state.selectedTypeIndex === 0) {
-                                this.props.navigation.navigate("MultipleChoiceQuestionEditor",
-                                    {'examId': this.state.examId});
+                                this.props.navigation.navigate("MultipleChoiceQuestionEditor", {
+                                        'examId': this.state.examId,
+                                        onGoBack: () => this.hardRefresh()});
                             }
                             if (this.state.selectedTypeIndex === 1) {
-                                this.props.navigation.navigate("FillInBlankQuestionEditor",
-                                    {'examId': this.state.examId});
+                                this.props.navigation.navigate("FillInBlankQuestionEditor", {
+                                        'examId': this.state.examId,
+                                        onGoBack: () => this.hardRefresh()});
                             }
                             if (this.state.selectedTypeIndex === 2) {
-                                this.props.navigation.navigate("EssayQuestionEditor",
-                                    {'examId': this.state.examId});
+                                this.props.navigation.navigate("EssayQuestionEditor", {
+                                        'examId': this.state.examId,
+                                        onGoBack: () => this.hardRefresh()});
                             }
                             if (this.state.selectedTypeIndex === 3) {
-                                this.props.navigation.navigate("TrueFalseQuestionEditor",
-                                    {'examId': this.state.examId});
+                                this.props.navigation.navigate("TrueFalseQuestionEditor", {
+                                        'examId': this.state.examId,
+                                        onGoBack: () => this.hardRefresh()});
                             }
                         }}/>
             </ScrollView>

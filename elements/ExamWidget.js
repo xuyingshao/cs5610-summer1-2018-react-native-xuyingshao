@@ -1,6 +1,7 @@
 import React from 'react';
-import {ScrollView} from "react-native";
-import {FormLabel, FormInput, FormValidationMessage} from "react-native-elements";
+import {ScrollView, View} from "react-native";
+import {Alert} from 'react-native';
+import {FormLabel, FormInput, FormValidationMessage, ListItem} from "react-native-elements";
 import {Button} from "react-native-elements";
 import QuestionTypeButtonGroupChooser from "./QuestionTypeButtonGroupChooser";
 import QuestionList from "../components/QuestionList";
@@ -25,6 +26,8 @@ export default class ExamWidget
             questions: []
         };
 
+        this.refresh = this.refresh.bind(this);
+
         this.widgetServiceClient = WidgetServiceClient.instance();
         this.questionServiceClient = QuestionServiceClient.instance();
     }
@@ -47,12 +50,28 @@ export default class ExamWidget
             })
     }
 
-    componentWillReceiveProps(newProps) {
-        const examId = this.props.navigation.getParam('examId', 0);
+    // componentWillReceiveProps(newProps) {
+    //     const examId = this.props.navigation.getParam('examId', 0);
+    //     const questions = this.props.navigation.getParam('questions', []);
+    //
+    //     this.setState({examId: examId});
+    //     this.setState({questions: questions});
+    //
+    //
+    //     // Alert.alert('examId');
+    //
+    //     // this.questionServiceClient.findAllQuestionsForExam(examId)
+    //     //     .then((questions) => {
+    //     //         this.setState({questions: questions});
+    //     //     })
+    // }
 
-        this.setState({examId: examId});
+    componentWillUnmount() {
+        this.props.navigation.state.params.onGoBack();
+    }
 
-        this.questionServiceClient.findAllQuestionsForExam(examId)
+    refresh() {
+        this.questionServiceClient.findAllQuestionsForExam(this.state.examId)
             .then((questions) => {
                 this.setState({questions: questions});
             })
@@ -81,7 +100,8 @@ export default class ExamWidget
 
                 <QuestionList navigation={this.props.navigation}
                               examId={this.state.examId}
-                              questions={this.state.questions}/>
+                              questions={this.state.questions}
+                              refresh={() => this.refresh()}/>
 
                 {/*{this.state.questions.map((question) => {*/}
                     {/*return (*/}
@@ -96,7 +116,8 @@ export default class ExamWidget
                                                       {/*'title': question.title,*/}
                                                       {/*'description': question.description,*/}
                                                       {/*'points': question.points,*/}
-                                                      {/*'isTrue': question.isTrue*/}
+                                                      {/*'isTrue': question.isTrue,*/}
+                                                      {/*onGoBack: () => this.refresh()*/}
                                                   {/*})*/}
                                           {/*}*/}
                                           {/*if (question.questionType === 'Multiple') {*/}
@@ -108,7 +129,8 @@ export default class ExamWidget
                                                       {/*'description': question.description,*/}
                                                       {/*'points': question.points,*/}
                                                       {/*'choices': question.choices,*/}
-                                                      {/*'correctAnswer': question.correctAnswer*/}
+                                                      {/*'correctAnswer': question.correctAnswer,*/}
+                                                      {/*onGoBack: () => this.refresh()*/}
                                                   {/*})*/}
                                           {/*}*/}
                                           {/*if (question.questionType === 'Essay') {*/}
@@ -118,7 +140,9 @@ export default class ExamWidget
                                                       {/*'examId': this.state.examId,*/}
                                                       {/*'title': question.title,*/}
                                                       {/*'description': question.description,*/}
-                                                      {/*'points': question.points*/}
+                                                      {/*'points': question.points,*/}
+                                                      {/*onGoBack: () => this.refresh(),*/}
+                                                      {/*'a' : a*/}
                                                   {/*})*/}
                                           {/*}*/}
                                           {/*if (question.questionType === 'FillInBlank') {*/}
@@ -129,7 +153,8 @@ export default class ExamWidget
                                                       {/*'title': question.title,*/}
                                                       {/*'description': question.description,*/}
                                                       {/*'variables': question.variables,*/}
-                                                      {/*'points': question.points*/}
+                                                      {/*'points': question.points,*/}
+                                                      {/*onGoBack: () => this.refresh()*/}
                                                   {/*})*/}
                                           {/*}*/}
                                       {/*}}*/}
@@ -137,10 +162,11 @@ export default class ExamWidget
                                       {/*key={question.id}*/}
                                       {/*subtitle={question.questionType}/>*/}
                         {/*</View>*/}
-                    {/*);*/}
+                {/*);*/}
                 {/*})}*/}
 
-                <QuestionTypeButtonGroupChooser navigation={this.props.navigation}/>
+                <QuestionTypeButtonGroupChooser navigation={this.props.navigation}
+                                                refresh={() => this.refresh()}/>
 
                 <Button backgroundColor='#4c73c4'
                         title='Save Exam'
@@ -159,11 +185,13 @@ export default class ExamWidget
                             width: 330,
                             height: 40,
                             marginTop: 2,
-                            margin: 10,}}/>
+                            margin: 10,
+                        }}/>
                 <Button backgroundColor='#4682B4'
                         title='Cancel'
                         onPress={() => {
-                            this.props.navigation.navigate('WidgetList', {lessonId: this.state.lessonId});}}
+                            this.props.navigation.navigate('WidgetList', {lessonId: this.state.lessonId});
+                        }}
                         buttonStyle={{
                             width: 330,
                             height: 40,
@@ -174,7 +202,8 @@ export default class ExamWidget
                         onPress={() => {
                             this.widgetServiceClient.deleteExam(this.state.examId)
                                 .then(() => {
-                                    this.props.navigation.navigate('WidgetList', {lessonId: this.state.lessonId})})
+                                    this.props.navigation.navigate('WidgetList', {lessonId: this.state.lessonId})
+                                })
                         }}
                         buttonStyle={{
                             width: 330,

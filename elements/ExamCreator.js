@@ -76,6 +76,7 @@ export default class ExamCreator
                                         examId: exam.id,
                                         title: exam.title,
                                         description: exam.description,
+                                        onGoBack: () => this.props.navigation.state.params.onGoBack
                                     })
                                 });
                         }}

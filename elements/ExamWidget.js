@@ -47,9 +47,16 @@ export default class ExamWidget
             })
     }
 
-    // componentWillReceiveNewProps() {
-    //
-    // }
+    componentWillReceiveProps(newProps) {
+        const examId = this.props.navigation.getParam('examId', 0);
+
+        this.setState({examId: examId});
+
+        this.questionServiceClient.findAllQuestionsForExam(examId)
+            .then((questions) => {
+                this.setState({questions: questions});
+            })
+    }
 
     render() {
         return (
@@ -145,7 +152,7 @@ export default class ExamWidget
 
                             this.widgetServiceClient.updateExam(this.state.examId, exam)
                                 .then(() => {
-                                    this.props.navigation.navigate('LessonList');
+                                    this.props.navigation.navigate('WidgetList', {lessonId: this.state.lessonId});
                                 })
                         }}
                         buttonStyle={{
@@ -156,7 +163,7 @@ export default class ExamWidget
                 <Button backgroundColor='#4682B4'
                         title='Cancel'
                         onPress={() => {
-                            this.props.navigation.navigate('LessonList');}}
+                            this.props.navigation.navigate('WidgetList', {lessonId: this.state.lessonId});}}
                         buttonStyle={{
                             width: 330,
                             height: 40,
@@ -167,7 +174,7 @@ export default class ExamWidget
                         onPress={() => {
                             this.widgetServiceClient.deleteExam(this.state.examId)
                                 .then(() => {
-                                    this.props.navigation.navigate('LessonList')})
+                                    this.props.navigation.navigate('WidgetList', {lessonId: this.state.lessonId})})
                         }}
                         buttonStyle={{
                             width: 330,

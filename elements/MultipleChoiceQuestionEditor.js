@@ -72,7 +72,7 @@ export default class MultipleChoiceQuestionEditor
                         {this.state.description !== '' && ''}
                     </FormValidationMessage>
 
-                    <FormLabel>Choices</FormLabel>
+                    <FormLabel>Choices(one option per line)</FormLabel>
                     <TextInput style={styles.textAreaContainer}
                                multiline={true}
                                onChangeText={(text) => this.setState({choices: text})}>
@@ -92,7 +92,7 @@ export default class MultipleChoiceQuestionEditor
                         {this.state.points !== 0 && ''}
                     </FormValidationMessage>
 
-                    <FormLabel>Correct Answer</FormLabel>
+                    <FormLabel>Correct Answer(index of correct answer, e.g. 0)</FormLabel>
                     <FormInput onChangeText={(text) => this.setState({correctAnswer: text})}>
                         {this.state.correctAnswer}
                     </FormInput>
@@ -123,7 +123,7 @@ export default class MultipleChoiceQuestionEditor
                                     };
 
                                     this.questionServiceClient.createMultipleChoiceQuestion(this.state.examId, question)
-                                        .then(this.props.navigation.navigate('WidgetList'));
+                                        .then(this.props.navigation.navigate('ExamWidget', {examId: this.state.examId}));
                                 }
                                 else {
                                     let question = {
@@ -135,40 +135,46 @@ export default class MultipleChoiceQuestionEditor
                                     };
 
                                     this.questionServiceClient.updateMultipleChoiceQuestion(this.state.questionId, question)
-                                        .then(this.props.navigation.navigate('WidgetList'));
+                                        .then(this.props.navigation.navigate('ExamWidget', {examId: this.state.examId}));
                                 }
                             }}/>
                     <Button backgroundColor='#4682B4'
                             color='white'
                             title='Cancel'
                             onPress={() => {
-                                this.props.navigation.goBack()}}
+                                this.props.navigation.goBack()
+                            }}
                             buttonStyle={{
                                 width: 330,
                                 height: 40,
                                 marginTop: 1, margin: 10,
                             }}/>
+                    {this.state.questionId !== 0 &&
                     <Button backgroundColor='#FA8072'
                             color='white'
                             title='Delete'
                             onPress={() => {
                                 this.questionServiceClient.deleteMultipleChoiceQuestion(this.state.questionId)
-                                    .then(this.props.navigation.navigate('WidgetList'));}}
+                                    .then(this.props.navigation.navigate('ExamWidget', {examId: this.state.examId}));
+                            }}
                             buttonStyle={{
                                 width: 330,
                                 height: 40,
                                 marginTop: 1,
-                                margin: 10,}}/>
+                                margin: 10,
+                            }}/>}
                 </ScrollView>}
 
                 <Button title="Preview"
                         onPress={() => {
-                            this.setState({previewMode: !this.state.previewMode})}}
+                            this.setState({previewMode: !this.state.previewMode})
+                        }}
                         buttonStyle={{
                             width: 330,
                             height: 40,
                             marginTop: 1,
-                            margin: 10,}}/>
+                            margin: 10,
+                        }}/>
 
                 {this.state.previewMode &&
                 <ScrollView style={styles.textAreaContainer}>

@@ -1,5 +1,6 @@
 import React from 'react';
 import {ScrollView, Text} from 'react-native';
+import {Alert} from 'react-native';
 import {ListItem} from 'react-native-elements';
 import WidgetTypePicker from '../elements/WidgetTypePicker';
 import WidgetServiceClient from "../services/WidgetServiceClient";
@@ -30,6 +31,17 @@ export default class WidgetList
 
         this.setState({courseId: courseId});
         this.setState({moduleId: moduleId});
+        this.setState({lessonId: lessonId});
+
+        this.widgetServiceClient.findAllWidgetsForLesson(lessonId)
+            .then((widgets) => {
+                this.setState({widgets: widgets});
+            });
+    }
+
+    componentWillReceiveProps(newProps) {
+        const lessonId = this.props.navigation.getParam('lessonId', 0);
+
         this.setState({lessonId: lessonId});
 
         this.widgetServiceClient.findAllWidgetsForLesson(lessonId)

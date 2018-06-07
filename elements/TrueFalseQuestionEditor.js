@@ -102,7 +102,7 @@ export default class TrueFalseQuestionEditor
                                     };
 
                                     this.questionServiceClient.createTrueFalseQuestion(this.state.examId, question)
-                                        .then(this.props.navigation.navigate('WidgetList'));
+                                        .then(this.props.navigation.navigate('ExamWidget', {examId: this.state.examId}));
                                 }
                                 else {
                                     let question = {
@@ -113,7 +113,7 @@ export default class TrueFalseQuestionEditor
                                     };
 
                                     this.questionServiceClient.updateTrueFalseQuestion(this.state.questionId, question)
-                                        .then(this.props.navigation.navigate('WidgetList'));
+                                        .then(this.props.navigation.navigate('ExamWidget', {examId: this.state.examId}));
                                 }
                             }}/>
                     <Button backgroundColor='#4682B4'
@@ -128,27 +128,32 @@ export default class TrueFalseQuestionEditor
                                 marginTop: 1,
                                 margin: 10,
                             }}/>
+                    {this.questionId !== 0 &&
                     <Button backgroundColor='#FA8072'
                             color='white'
                             title='Delete'
                             onPress={() => {
                                 this.questionServiceClient.deleteTrueFalseQuestion(this.state.questionId)
-                                    .then(this.props.navigation.navigate('WidgetList'));}}
+                                    .then(this.props.navigation.navigate('ExamWidget', {examId: this.state.examId}));
+                            }}
                             buttonStyle={{
                                 width: 330,
                                 height: 40,
                                 marginTop: 1,
-                                margin: 10,}}/>
+                                margin: 10,
+                            }}/>}
                 </ScrollView>}
 
                 <Button title="Preview"
                         onPress={() => {
-                            this.setState({previewMode: !this.state.previewMode})}}
+                            this.setState({previewMode: !this.state.previewMode})
+                        }}
                         buttonStyle={{
                             width: 330,
                             height: 40,
                             marginTop: 1,
-                            margin: 10,}}/>
+                            margin: 10,
+                        }}/>
 
                 {this.state.previewMode &&
                 <ScrollView style={styles.textAreaContainer}>

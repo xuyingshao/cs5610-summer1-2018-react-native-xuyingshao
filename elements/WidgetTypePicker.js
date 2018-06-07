@@ -17,17 +17,13 @@ export default class WidgetTypePicker
 
     componentDidMount() {
         // const lessonId = this.props.navigation.getParam('lessonId', 0);
-
         this.setState({lessonId: this.props.lessonId});
     }
 
     componentWillReceiveProps(newProps) {
         // const lessonId = this.props.navigation.getParam('lessonId', 0);
-
         this.setState({lessonId: newProps.lessonId});
     }
-
-
 
     render() {
         return (

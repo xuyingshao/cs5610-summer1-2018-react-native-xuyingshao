@@ -76,7 +76,8 @@ export default class AssignmentWidget
                         width: 330,
                         height: 40,
                         marginTop: 1,
-                        margin: 10,}}
+                        margin: 10,
+                    }}
                             backgroundColor='#4c73c4'
                             title='Save Assignment'
                             onPress={() => {
@@ -89,7 +90,8 @@ export default class AssignmentWidget
                                     };
 
                                     this.widgetServiceClient.createAssignment(this.state.lessonId, assignment)
-                                        .then(this.props.navigation.navigate('LessonList'));
+                                    // .then(this.props.navigation.navigate('LessonList'));
+                                        .then(this.props.navigation.navigate('WidgetList', {lessonId: this.state.lessonId}));
                                 }
                                 if (this.state.assignmentId !== 0) {
                                     let assignment = {
@@ -100,7 +102,8 @@ export default class AssignmentWidget
                                     };
 
                                     this.widgetServiceClient.updateAssignment(this.state.assignmentId, assignment)
-                                        .then(this.props.navigation.navigate('LessonList'));
+                                        .then(this.props.navigation.navigate('WidgetList', {lessonId: this.state.lessonId}));
+                                    // .then(this.props.navigation.navigate('LessonList'));
                                 }
                             }}/>
                     <Button backgroundColor='#4682B4'
@@ -115,18 +118,19 @@ export default class AssignmentWidget
                                 marginTop: 1,
                                 margin: 10,
                             }}/>
+                    {this.state.assignmentId !== 0 &&
                     <Button backgroundColor='#FA8072'
                             title='Delete Assignment'
                             onPress={() => {
                                 this.widgetServiceClient.deleteAssignment(this.state.assignmentId)
-                                    .then(this.props.navigation.navigate('LessonList'));
+                                    .then(this.props.navigation.navigate('WidgetList', {lessonId: this.state.lessonId}));
                             }}
                             buttonStyle={{
                                 width: 330,
                                 height: 40,
                                 marginTop: 1,
                                 margin: 10,
-                            }}/>
+                            }}/>}
                 </ScrollView>}
 
                 <Button title="Preview"

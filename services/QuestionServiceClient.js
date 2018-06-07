@@ -1,18 +1,18 @@
 let _singleton = Symbol();
 
-const COURSE_API_URL = 'http://localhost:8080/api/course';
-const EXAM_API_URL = 'http://localhost:8080/api/exam';
-const MULTI_API_URL = 'http://localhost:8080/api/multi';
-const TRUEFALSE_API_URL = 'http://localhost:8080/api/truefalse';
-const ESSAY_API_URL = 'http://localhost:8080/api/essay';
-const BLANK_API_URL = 'http://localhost:8080/api/blanks';
+// const COURSE_API_URL = 'http://localhost:8080/api/course';
+// const EXAM_API_URL = 'http://localhost:8080/api/exam';
+// const MULTI_API_URL = 'http://localhost:8080/api/multi';
+// const TRUEFALSE_API_URL = 'http://localhost:8080/api/truefalse';
+// const ESSAY_API_URL = 'http://localhost:8080/api/essay';
+// const BLANK_API_URL = 'http://localhost:8080/api/blanks';
 
-// const COURSE_API_URL = 'https://course-manager-jeanne.herokuapp.com/api/course';
-// const EXAM_API_URL = 'https://course-manager-jeanne.herokuapp.com/api/exam';
-// const MULTI_API_URL = 'https://course-manager-jeanne.herokuapp.com/api/multi';
-// const TRUEFALSE_API_URL = 'https://course-manager-jeanne.herokuapp.com/api/truefalse';
-// const ESSAY_API_URL = 'https://course-manager-jeanne.herokuapp.com/api/essay';
-// const BLANK_API_URL = 'https://course-manager-jeanne.herokuapp.com/api/blanks';
+const COURSE_API_URL = 'https://course-manager-react-native.herokuapp.com/api/course';
+const EXAM_API_URL = 'https://course-manager-react-native.herokuapp.com/api/exam';
+const MULTI_API_URL = 'https://course-manager-react-native.herokuapp.com/api/multi';
+const TRUEFALSE_API_URL = 'https://course-manager-react-native.herokuapp.com/api/truefalse';
+const ESSAY_API_URL = 'https://course-manager-react-native.herokuapp.com/api/essay';
+const BLANK_API_URL = 'https://course-manager-react-native.herokuapp.com/api/blanks';
 
 
 export default class QuestionServiceClient {

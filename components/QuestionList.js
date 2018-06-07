@@ -10,7 +10,7 @@ export default class QuestionList
         super(props);
 
         this.state = {
-            examId: 1,
+            examId: 0,
             questions: []
         };
     }

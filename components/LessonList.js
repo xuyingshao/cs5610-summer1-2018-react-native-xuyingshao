@@ -13,8 +13,8 @@ export default class LessonList
         super(props);
 
         this.state = {
-            courseId: 1,
-            moduleId: 1,
+            courseId: 0,
+            moduleId: 0,
             lessons: []
         };
 
@@ -22,8 +22,8 @@ export default class LessonList
     }
 
     componentDidMount() {
-        const courseId = this.props.navigation.getParam('courseId', 1);
-        const moduleId = this.props.navigation.getParam('moduleId', 1);
+        const courseId = this.props.navigation.getParam('courseId', 0);
+        const moduleId = this.props.navigation.getParam('moduleId', 0);
 
         this.setState({courseId: courseId});
         this.setState({moduleId: moduleId});

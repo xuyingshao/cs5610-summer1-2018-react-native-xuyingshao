@@ -72,7 +72,7 @@ export default class WidgetList
 
                     );
                 })}
-                <WidgetTypePicker navigation={this.props.navigation}/>
+                <WidgetTypePicker navigation={this.props.navigation} lessonId={this.state.lessonId}/>
             </ScrollView>
         );
     }

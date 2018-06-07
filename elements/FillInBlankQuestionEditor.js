@@ -69,7 +69,7 @@ export default class EssayQuestionEditor
                         {this.state.description !== '' && ''}
                     </FormValidationMessage>
 
-                    <FormLabel>Variables</FormLabel>
+                    <FormLabel>Variables e.g.(1+1=[two=2])</FormLabel>
                     <TextInput style={styles.textAreaContainer}
                                multiline={true}
                                onChangeText={(text) => this.setState({variables: text})}>

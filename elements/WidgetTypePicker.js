@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Picker} from 'react-native';
-import {Button} from 'react-native-elements';
+import {Button, Text} from 'react-native-elements';
 
 
 export default class WidgetTypePicker
@@ -11,15 +11,23 @@ export default class WidgetTypePicker
 
         this.state = {
             widgetType: 'AS',
-            lessonId: 1
+            lessonId: 0
         };
     }
 
     componentDidMount() {
-        const lessonId = this.props.navigation.getParam('lessonId', 0);
+        // const lessonId = this.props.navigation.getParam('lessonId', 0);
 
-        this.setState({lessonId: lessonId});
+        this.setState({lessonId: this.props.lessonId});
     }
+
+    componentWillReceiveProps(newProps) {
+        // const lessonId = this.props.navigation.getParam('lessonId', 0);
+
+        this.setState({lessonId: newProps.lessonId});
+    }
+
+
 
     render() {
         return (

@@ -1,10 +1,10 @@
 let _singleton = Symbol();
 
-const COURSE_API_URL = 'http://localhost:8080/api/course';
-const MODULE_API_URL = 'http://localhost:8080/api/module';
+// const COURSE_API_URL = 'http://localhost:8080/api/course';
+// const MODULE_API_URL = 'http://localhost:8080/api/module';
 
-// const COURSE_API_URL = 'https://course-manager-jeanne.herokuapp.com/api/course';
-// const MODULE_API_URL = 'https://course-manager-jeanne.herokuapp.com/api/module';
+const COURSE_API_URL = 'https://course-manager-react-native.herokuapp.com/api/course';
+const MODULE_API_URL = 'https://course-manager-react-native.herokuapp.com/api/module';
 
 export default class ModuleServiceClient {
     constructor(singletonToken) {

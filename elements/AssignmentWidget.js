@@ -27,7 +27,7 @@ export default class AssignmentWidget
     }
 
     componentDidMount() {
-        const lessonId = this.props.navigation.getParam('lessonId', 0);
+        let lessonId = this.props.navigation.getParam('lessonId', 0);
         const assignmentId = this.props.navigation.getParam('assignmentId', 0);
         const title = this.props.navigation.getParam('title', '');
         const description = this.props.navigation.getParam('description', '');
@@ -166,7 +166,6 @@ export default class AssignmentWidget
                     <Text h4>Submit a link</Text>
                     <TextInput style={styles.textAreaContainer}/>
                 </ScrollView>}
-
             </ScrollView>
         );
     }

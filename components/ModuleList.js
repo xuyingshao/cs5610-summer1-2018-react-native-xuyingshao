@@ -1,7 +1,7 @@
 import React from 'react';
 import ModuleServiceClient from "../services/ModuleServiceClient";
 import {ScrollView} from "react-native";
-import {ListItem} from "react-native-elements";
+import {ListItem, Text} from "react-native-elements";
 
 
 export default class ModuleList
@@ -13,7 +13,7 @@ export default class ModuleList
         super(props);
 
         this.state = {
-            courseId: 1,
+            courseId: 0,
             modules: []
         };
 
@@ -21,7 +21,7 @@ export default class ModuleList
     }
 
     componentDidMount() {
-        const courseId = this.props.navigation.getParam('courseId', 1);
+        const courseId = this.props.navigation.getParam('courseId', 0);
 
         this.setState({courseId: courseId});
 
@@ -36,14 +36,19 @@ export default class ModuleList
     render() {
         return (
             <ScrollView>
-                {this.state.modules.map((module) =>
-                    <ListItem
-                        onPress={() => this.props.navigation.navigate("LessonList", {
-                            courseId: this.state.courseId,
-                            lessonId: module.id
-                        })}
+                {this.state.modules.map((module) => {
+                    return (
+                        <ListItem
+                        onPress={() => {
+                            this.props.navigation.navigate("LessonList", {
+                                courseId: this.state.courseId,
+                                moduleId: module.id
+                            })
+                        }}
                         title={module.title}
-                        key={module.id}/>)}
+                        key={module.id}/>
+                    );
+                })}
             </ScrollView>
         );
     }

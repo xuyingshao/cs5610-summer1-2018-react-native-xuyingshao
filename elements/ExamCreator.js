@@ -75,11 +75,8 @@ export default class ExamCreator
 
                             this.widgetServiceClient.createExam(this.state.lessonId, exam)
                                 .then((exam) => {
-                                    this.props.navigation.navigate('ExamWidget', {
+                                    this.props.navigation.navigate('WidgetList', {
                                         lessonId: this.state.lessonId,
-                                        examId: exam.id,
-                                        title: exam.title,
-                                        description: exam.description,
                                         onGoBack: () => this.props.navigation.state.params.onGoBack
                                     })
                                 });

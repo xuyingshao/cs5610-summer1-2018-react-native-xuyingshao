@@ -103,68 +103,6 @@ export default class ExamWidget
                               questions={this.state.questions}
                               refresh={() => this.refresh()}/>
 
-                {/*{this.state.questions.map((question) => {*/}
-                    {/*return (*/}
-                        {/*<View key={question.id}>*/}
-                            {/*<ListItem leftIcon={{name: question.icon}}*/}
-                                      {/*onPress={() => {*/}
-                                          {/*if (question.questionType === 'TrueFalse') {*/}
-                                              {/*this.props.navigation.navigate('TrueFalseQuestionEditor',*/}
-                                                  {/*{*/}
-                                                      {/*'questionId': question.id,*/}
-                                                      {/*'examId': this.state.examId,*/}
-                                                      {/*'title': question.title,*/}
-                                                      {/*'description': question.description,*/}
-                                                      {/*'points': question.points,*/}
-                                                      {/*'isTrue': question.isTrue,*/}
-                                                      {/*onGoBack: () => this.refresh()*/}
-                                                  {/*})*/}
-                                          {/*}*/}
-                                          {/*if (question.questionType === 'Multiple') {*/}
-                                              {/*this.props.navigation.navigate('MultipleChoiceQuestionEditor',*/}
-                                                  {/*{*/}
-                                                      {/*'questionId': question.id,*/}
-                                                      {/*'examId': this.state.examId,*/}
-                                                      {/*'title': question.title,*/}
-                                                      {/*'description': question.description,*/}
-                                                      {/*'points': question.points,*/}
-                                                      {/*'choices': question.choices,*/}
-                                                      {/*'correctAnswer': question.correctAnswer,*/}
-                                                      {/*onGoBack: () => this.refresh()*/}
-                                                  {/*})*/}
-                                          {/*}*/}
-                                          {/*if (question.questionType === 'Essay') {*/}
-                                              {/*this.props.navigation.navigate('EssayQuestionEditor',*/}
-                                                  {/*{*/}
-                                                      {/*'questionId': question.id,*/}
-                                                      {/*'examId': this.state.examId,*/}
-                                                      {/*'title': question.title,*/}
-                                                      {/*'description': question.description,*/}
-                                                      {/*'points': question.points,*/}
-                                                      {/*onGoBack: () => this.refresh(),*/}
-                                                      {/*'a' : a*/}
-                                                  {/*})*/}
-                                          {/*}*/}
-                                          {/*if (question.questionType === 'FillInBlank') {*/}
-                                              {/*this.props.navigation.navigate('FillInBlankQuestionEditor',*/}
-                                                  {/*{*/}
-                                                      {/*'questionId': question.id,*/}
-                                                      {/*'examId': this.state.examId,*/}
-                                                      {/*'title': question.title,*/}
-                                                      {/*'description': question.description,*/}
-                                                      {/*'variables': question.variables,*/}
-                                                      {/*'points': question.points,*/}
-                                                      {/*onGoBack: () => this.refresh()*/}
-                                                  {/*})*/}
-                                          {/*}*/}
-                                      {/*}}*/}
-                                      {/*title={question.title}*/}
-                                      {/*key={question.id}*/}
-                                      {/*subtitle={question.questionType}/>*/}
-                        {/*</View>*/}
-                {/*);*/}
-                {/*})}*/}
-
                 <QuestionTypeButtonGroupChooser navigation={this.props.navigation}
                                                 refresh={() => this.refresh()}/>
 

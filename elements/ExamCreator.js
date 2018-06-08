@@ -29,6 +29,10 @@ export default class ExamCreator
         this.setState({lessonId: lessonId});
     }
 
+    componentWillUnmount() {
+        this.props.navigation.state.params.onGoBack();
+    }
+
     render() {
         return (
             <ScrollView>
